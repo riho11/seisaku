@@ -1,0 +1,24 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'APJapanesefont'; 
+    src: url('font/apjapanesefont.woff') format('woff'),
+         url('font/apjapanesefont.woff2') format('woff2'),
+         url('font/APJapanesefont.ttf') format('truetype');
+}
+
+html,body,a,h1{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: 'APJapanesefont'; 
+    font-size:120%;
+}
+
+#wrapper{
+    width: 100%;
+    margin: 0 auto;
+}
+

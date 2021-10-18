@@ -1,0 +1,57 @@
+@charset "UTF-8";
+
+@font-face {
+    font-family: 'APJapanesefont'; 
+    src: url('font/apjapanesefont.woff') format('woff'),
+         url('font/apjapanesefont.woff2') format('woff2'),
+         url('font/APJapanesefont.ttf') format('truetype');
+}
+
+html,body,a,h1{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: 'APJapanesefont'; 
+    font-size:120%;
+}
+
+#wrapper{
+    width: 100%;
+    margin: 0 auto;
+}
+
+main{
+    width: 60%;
+    margin: 0 auto;
+}
+
+table td {
+    padding: 20px;
+}
+   
+table th {
+    padding: 20px;
+    vertical-align: top;
+    padding-left: 50px;
+    text-align: left;
+    width: 200px;
+}
+
+main h1{
+    text-align: center;
+    margin-top: 30px;
+}
+
+
+@media screen and (min-width:841px){
+
+	#wrapper{
+		flex-wrap:wrap;
+		max-width:2000px;
+		margin:0 auto;
+	}
+
+
+}
