@@ -13,7 +13,7 @@
     <div id="wrapper">
 <?php
 //ナビ部分呼び出し
-    require_once 'loginnav.php';
+    require_once 'nav.php';
 ?>
         <main>
             <div id="form">

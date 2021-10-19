@@ -12,7 +12,7 @@
     <div id="wrapper">
 <?php
 //ナビ部分呼び出し
-    require_once 'loginnav.php';
+    require_once 'nav.php';
 //DB呼び出し
     require_once 'db.php';
 
