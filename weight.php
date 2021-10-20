@@ -120,7 +120,15 @@
     $stmt->execute();
     $response=$stmt->fetchall(PDO::FETCH_ASSOC);
     $stmt = null;
-?>
+// 体重取り出し
+    $ary_weight = array_column($response,'record_weight');
+    $str_weight = implode(',', $ary_weight);
+// 体脂肪取り出し
+    $ary_bodyfat = array_column($response,'record_bodyfat');
+    $str_bodyfat = implode(',', $ary_bodyfat);
+
+    ?>
+
     
   
 
@@ -140,13 +148,13 @@
         {
           label: '体重',
         
-          data: [10,20,],
+          data: [<?php echo $str_weight; ?>],
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
           label: '体脂肪',
-          data: [18, 21, 24, 22, 21, 19, 18, 20],
+          data: [<?php echo $str_bodyfat; ?>],
           borderColor: "#2260ea",
           backgroundColor: "#00000000"
         }
