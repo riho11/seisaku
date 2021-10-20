@@ -114,6 +114,16 @@
 ?>
 
 
+<?php // 日々の体重を取得
+    $stmt=$pdo->prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY date ASC");
+    $stmt->bindParam(":regist_id",$_SESSION["id"]);
+    $stmt->execute();
+    $response=$stmt->fetchall(PDO::FETCH_ASSOC);
+    $stmt = null;
+?>
+    
+  
+
 <!-- 折れ線グラフ -->
         <div style="width:800px;" >
     <canvas id="chart"></canvas>
@@ -129,8 +139,8 @@
       datasets: [
         {
           label: '体重',
-
-          data: [27, 26, 31, 25, 30, 22, 27, 26],
+        
+          data: [10,20,],
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
@@ -161,8 +171,6 @@
       },
     }
   });
-  
-  
   </script>
 
 <?php else: ?>

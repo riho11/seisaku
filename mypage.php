@@ -93,7 +93,7 @@
                 <?php 
                 try { // 現在の体重が設定されていない場合、例外処理で初期の体重を記載
                     // SQL実行(weight選択)
-                    $stmt=$pdo->prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id");
+                    $stmt=$pdo->prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY date DESC");
                     $stmt->bindParam(":regist_id",$result["regist_id"]);
                     $stmt->execute();
                     $record=$stmt->fetch(PDO::FETCH_ASSOC);
