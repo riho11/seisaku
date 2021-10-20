@@ -27,6 +27,7 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
     $stmt->execute();
     $result=$stmt->fetch(PDO::FETCH_ASSOC);
     $stmt = null;
+    $_SESSION["id"] = $result["id"];
     if($_SESSION["email"] === $result["email"]): 
         $referer = isset( $_SERVER['HTTP_REFERER'] ) ? $_SERVER['HTTP_REFERER'] : null;
         $target_host = '/seisaku/regist1.php';

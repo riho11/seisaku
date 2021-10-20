@@ -21,7 +21,7 @@
         exit("直接アクセス禁止");
     endif;
 //SQL実行
-    $stmt=$pdo->prepare("SELECT `email`,`pass`,`namae` FROM `regist` WHERE `email`=:email");
+    $stmt=$pdo->prepare("SELECT `id`,`email`,`pass`,`namae` FROM `regist` WHERE `email`=:email");
     $stmt->bindParam(":email",$_POST["email"]);
     $stmt->execute();
     $result=$stmt->fetch(PDO::FETCH_ASSOC);
@@ -32,6 +32,7 @@
                 $_SESSION['email']=$_POST["email"];
                 $_SESSION['pass']=$_POST["pass"];
                 $_SESSION["namae"] = $result["namae"];
+                $_SESSION["id"] = $result["id"];
                 header("Location: http://".$_SERVER['HTTP_HOST']."/seisaku/login2.php");
         else:
             $errors = "パスワードが違います";
