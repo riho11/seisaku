@@ -31,14 +31,6 @@
         unlink($_SESSION['imgname']);
     } 
 ?>
-
-<script>
-    window.onpageshow = function(event){
-	if(event.persisted){
-		window.location.reload();
-	    }
-    }
-</script>
 <?php else: ?>
 	<p>ログインしなおしてください</p>
 	<p><a href='login.php'>ログインページ</a></p>

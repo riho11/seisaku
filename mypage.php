@@ -122,13 +122,15 @@
                 <tr>
                     <td>現在　
                 <?php
-                // 現在の体脂肪が記録されていない場合、初期の体脂肪を記載
-                if(is_null($record["record_bodyfat"])):
+                try{ // 現在の体脂肪が記録されていない場合、初期の体脂肪を記載
+                    if(is_null($record["record_bodyfat"])):
+                        echo null($result["bodyfat"]);
+                    else:
+                        echo $record["record_bodyfat"] . " ％";
+                    endif;
+                } catch(Exception $e){
                     echo null($result["bodyfat"]);
-                else:
-                    echo $record["record_bodyfat"] . " ％";
-                endif;
-                ?></td>
+                } ?></td>
                 </tr>
                 <tr>
                     <td>目標　<?php echo null($result["goal_bodyfat"]); ?></td>
@@ -139,13 +141,13 @@
                 // 体脂肪の残り目標
                 if(is_null($result["goal_bodyfat"])):
                     echo "目標が未設定です";
-                elseif(is_null($record["record_bodyfat"]) && is_null($result["bodyfat"])):
-                    echo "どっちも体脂肪が未設定です";
-                elseif(is_null($record["record_bodyfat"])):
-                    bodyfat_difference($result["bodyfat"],$result["goal_bodyfat"]);
-                else:
+                elseif(isset($record["record_bodyfat"])):
                     bodyfat_difference($record["record_bodyfat"],$result["goal_bodyfat"]);
-                endif; ?></td>
+                elseif(isset($result["bodyfat"])):
+                    bodyfat_difference($result["bodyfat"],$result["goal_bodyfat"]);
+                elseif(is_null($result["bodyfat"])):
+                    echo "体脂肪が未設定です";
+                endif;?></td>
                 </tr>
 
 <!-- 残り日数計算 -->

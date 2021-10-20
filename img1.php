@@ -52,22 +52,26 @@
     <?php endforeach; ?>
             <li><a href="mypage.php">マイページに戻る</a></li>
         </ul>
-        <?php else: ;?>
+        <?php else:?>
         <p><img src="<?php echo $filename; ?>" alt="送信画像"></p>
         <form action="img2.php" enctype="multipart/form-data" method="post">
             <input type="hidden" name="created_at" value="<?php echo $date; ?>">
             <input type="hidden" name="img" value="<?php echo $filename; ?>">
-            <input type="submit" value="登録">
+            <input type="submit" name="register" value="登録">
         </form>
         <form action="img.php" method="post">
             <input type="submit" name="back" value="キャンセル">
-        </form>
-    <?php endif; ?>
-<script>// メニューバー等で離れる場合の注意メッセージ
-window.onbeforeunload = function(e) {
-  e.returnValue = "ページを離れようとしています。よろしいですか？";
-}
+        </form> 
+        
+<script>// メニューバーを押した場合の注意メッセージ
+const arr = document.getElementsByTagName("a");
+ 
+ for (let i = 0; i < arr.length; i++) {
+   arr[i].onclick = (e) => { alert('登録、キャンセルいずれかを選択してください'); e.preventDefault(); };
+ }
 </script>
+
+    <?php endif; ?>
 <?php else: ?>
 	<p>ログインしなおしてください</p>
 	<p><a href='login.html'>ログインページ</a></p>
