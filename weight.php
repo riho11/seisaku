@@ -96,7 +96,6 @@
     <?php   endif;
             endif;
         endif;
-        $pdo = null;
 ?>
 
 <?php if (count($errors)): ?>
@@ -115,25 +114,22 @@
 
 
 <?php // 日々の体重を取得
-    $stmt=$pdo->prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY date ASC");
-    $stmt->bindParam(":regist_id",$_SESSION["id"]);
+    $stmt=$pdo -> prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY `date` ASC");
+    $stmt->bindParam(':regist_id',$_SESSION["id"]);
     $stmt->execute();
     $response=$stmt->fetchall(PDO::FETCH_ASSOC);
     $stmt = null;
-    
-// 体重取り出し
-    $ary_weight = array_column($response,'record_weight');
-    $str_weight = implode(',', $ary_weight);
 ?>
-
 
 
 <!-- 押したら表示されるボタン-->
 <form action="weight.php" method="POST">
     <button name="week" value="一週間">一週間</button>
-    <!-- <button name="month" value="一カ月">一カ月</button>
-    <button name="year" value="一年">一年</button> -->
+    <button name="month" value="一カ月">一カ月</button>
+    <button name="year" value="一年">一年</button>
 </form>
+<p>※記録した日のみが表示されます</p>
+<p>未登録は０になります</p>
 
 <!-- 折れ線グラフ -->
         <div style="width:800px;" >
@@ -150,27 +146,35 @@
     data: {
       // x軸の各メモリ 
       labels: [ // 日にち取得
-<?php foreach($response as $ary_date):
-        $str_date = explode("-",$ary_date["date"]);
-        echo $str_date[2]. ',';
-        endforeach;
+<?php 
+  $week_past = date("Y-m-d",strtotime("-1 week"));
+  foreach($response as $array):
+    if($week_past < $array["date"]):
+      $str_date = explode("-",$array["date"]);
+      echo $str_date[2]. ',';
+    endif;
+  endforeach;
 ?>],
       datasets: [
         {
           label: '体重',
         
-          data: [<?php echo $str_weight; ?>],
+          data: [ // 体重取り出し
+<?php foreach($response as $array):
+        echo $array["record_weight"] . ',';
+      endforeach;
+?>],
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
-          label: '体脂肪(未記入は０になります)',
+          label: '体脂肪',
           data: [ // 体脂肪取得(NULLの時０を代入)
-<?php foreach($response as $ary_bodyfat):
-  if(is_null($ary_bodyfat["record_bodyfat"])):
+<?php foreach($response as $array):
+  if(is_null($array["record_bodyfat"])):
     echo "0". ',';
   else:
-    echo $ary_bodyfat["record_bodyfat"] . ',';
+    echo $array["record_bodyfat"] . ',';
   endif;
   endforeach;
 ?>],
@@ -202,25 +206,46 @@
 
 <!-- 一カ月表示 -->
 <?php elseif(isset($_POST["month"])): ?>
-    <script>
+  <script>
   var ctx = document.getElementById("chart");
   var myLineChart = new Chart(ctx, {
     // グラフの種類：折れ線グラフを指定
     type: 'line',
     data: {
-      // x軸の各メモリ
-      labels: ['1','2','3','4','5','6','7','8','9','10','11','12','13','14','15','16','17','18','19','20','21','22','23','24','25','26','27','28','29','30'],
+      // x軸の各メモリ 
+      labels: [ // 日にち取得
+<?php 
+  $month_past = date("Y-m-d",strtotime("-1 month"));
+  foreach($response as $array):
+    if($month_past < $array["date"]):
+      $str_date = explode("-",$array["date"]);
+      echo $str_date[1].".".$str_date[2]. ',';
+    endif;
+  endforeach;
+?>],
       datasets: [
         {
           label: '体重',
         
-          data: [<?php echo $str_weight; ?>],
+          data: [ // 体重取り出し
+<?php foreach($response as $array):
+        echo $array["record_weight"] . ',';
+      endforeach;
+?>],
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
           label: '体脂肪',
-          data: [<?php echo $str_bodyfat; ?>],
+          data: [ // 体脂肪取得(NULLの時０を代入)
+<?php foreach($response as $array):
+  if(is_null($array["record_bodyfat"])):
+    echo "0". ',';
+  else:
+    echo $array["record_bodyfat"] . ',';
+  endif;
+  endforeach;
+?>],
           borderColor: "#2260ea",
           backgroundColor: "#00000000"
         }
@@ -249,25 +274,46 @@
 
 <!-- 一年表示 -->
 <?php elseif(isset($_POST["year"])): ?>
-    <script>
+  <script>
   var ctx = document.getElementById("chart");
   var myLineChart = new Chart(ctx, {
     // グラフの種類：折れ線グラフを指定
     type: 'line',
     data: {
-      // x軸の各メモリ
-      labels: ['1月', '2月', '3月', '4月', '5月', '6月', '7月','8月','9月','10月','11月','12月'],
+      // x軸の各メモリ 
+      labels: [ // 日にち取得
+<?php 
+  $year_past = date("Y-m-d",strtotime("-1 year"));
+  foreach($response as $array):
+    if($year_past < $array["date"]):
+      $str_date = explode("-",$array["date"]);
+      echo $str_date[1].".".$str_date[2]. ',';
+    endif;
+  endforeach;
+?>],
       datasets: [
         {
           label: '体重',
         
-          data: [<?php echo $str_weight; ?>],
+          data: [ // 体重取り出し
+<?php foreach($response as $array):
+        echo $array["record_weight"] . ',';
+      endforeach;
+?>],
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
           label: '体脂肪',
-          data: [<?php echo $str_bodyfat; ?>],
+          data: [ // 体脂肪取得(NULLの時０を代入)
+<?php foreach($response as $array):
+  if(is_null($array["record_bodyfat"])):
+    echo "0". ',';
+  else:
+    echo $array["record_bodyfat"] . ',';
+  endif;
+  endforeach;
+?>],
           borderColor: "#2260ea",
           backgroundColor: "#00000000"
         }
@@ -293,6 +339,7 @@
     }
   });
   </script>
+
 <?php endif; ?>
 
 <?php else: ?>
@@ -303,6 +350,7 @@
 <!-- フッター部分呼び出し -->
 <?php
     require_once 'footer.php';
+    $pdo = null;
 ?>
     </div>
 </body>
