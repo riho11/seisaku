@@ -9,6 +9,12 @@ header{
     width: 200px;
 }
 
+.icon{
+    border-radius:50%;
+    width:10%;
+    height:10%;
+}
+
 /* ナビ全体部分 */
 .cp_navi {
 	background-color: #fa788b;
@@ -112,8 +118,9 @@ nav #list{
 
 <!-- *****↓html記載↓***** -->
 <header>
-    <h1><a href="index.php"><img class="taiju" src="img/taijulogo.png" alt="ひよこ体重計"></a></h1>
+    <h1><a href="mypage.php"><img class="taiju" src="img/taijulogo.png" alt="ひよこ体重計"></a></h1>
     <p><?php echo $_SESSION['namae']; ?>さん、頑張りましょう</p>
+    <p><img class="icon" src="<?php echo $_SESSION["img"]; ?>" alt="アイコン画像"></p>
 </header>
 <!-- ナビ部分 -->
 <nav class="title">
@@ -130,7 +137,6 @@ nav #list{
                     </ul>
                 </div>
             </li>
-            <li class="list"><a class="line" href="form.html">日記</a></li>
             <li class="list"><a class="line" href="access.html">Q&A</a></li>
             <li class="list"><a class="line" href="form.html">お問合せ</a></li>
         </ul>
