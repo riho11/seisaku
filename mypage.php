@@ -209,7 +209,7 @@
             $img=$stmt->fetch(PDO::FETCH_ASSOC);
             $stmt = null;
 ?>
-    <p><img src="<?php echo $img["img"]; ?>" alt="設定画像"  width="30%" height="30%"></p>
+    <p><img class="myicon" src="<?php echo $img["img"]; ?>" alt="アイコン画像"></p>
     <?php
         endif;
         $pdo=null;
