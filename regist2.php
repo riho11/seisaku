@@ -33,7 +33,6 @@
         session_start();
         session_regenerate_id(true);
         $namae = $_POST["namae"];
-        $_SESSION['namae']=$_POST["namae"];
     endif;
 
     $email = null;
@@ -53,7 +52,6 @@
             $errors["email"] = "このメールアドレスは登録済みです";
         else:
             $email = $_POST["email"];
-            $_SESSION['email']=$_POST["email"];
         endif;
         $stmt = null;
     endif;
@@ -65,7 +63,6 @@
         $errors["pass"] = "パスワードの形式が違います";
     else:
         $pass = $_POST["pass"];
-        $_SESSION['pass']=$_POST["pass"];
         $hash = password_hash($pass,PASSWORD_DEFAULT);
     endif;
 
@@ -114,6 +111,10 @@
     else:
         $weight = $_POST["weight"];
     endif;
+    
+    $_SESSION['email']=$_POST["email"];
+    $_SESSION['pass']=$_POST["pass"];
+    $_SESSION["namae"] = $_POST["namae"];
 
     if(count($errors)===0):
     //SQL実行

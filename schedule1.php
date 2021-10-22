@@ -14,6 +14,8 @@
 </head>
 <body>
     <div id="wrapper">
+<!-- アイコンを非表示 -->
+<style>.firsticon{ display:none;}</style>
 <?php
 //ナビ部分呼び出し
     require_once 'loginnav.php';

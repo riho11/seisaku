@@ -16,7 +16,7 @@
     <div id="wrapper">
 <!-- ナビ部分呼び出し -->
 <?php
-    require_once 'loginnav.php';
+    require_once 'nav.php';
 
 	if(!isset($_SESSION['email'])):
 		exit("直接アクセス禁止");

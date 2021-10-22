@@ -14,6 +14,8 @@
 </head>
 <body>
     <div id="wrapper">
+<!-- アイコンを非表示 -->
+<style>.firsticon{ display:none;}</style>
 <?php
 //ナビ部分呼び出し
     require_once 'loginnav.php';
@@ -48,7 +50,6 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
     }
     if(isset($_SESSION["email"])):
 ?>
-
 <main>
     <p>目標を設定しましょう。</p>
     <div id="form">

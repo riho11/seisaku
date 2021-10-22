@@ -120,7 +120,7 @@ nav #list{
 <header>
     <h1><a href="mypage.php"><img class="taiju" src="img/taijulogo.png" alt="ひよこ体重計"></a></h1>
     <p><?php echo $_SESSION['namae']; ?>さん、頑張りましょう</p>
-    <p><img class="icon" src="<?php echo $_SESSION["img"]; ?>" alt="アイコン画像"></p>
+    <p class="firsticon"><img class="icon" src="<?php echo $_SESSION["img"]; ?>" alt="アイコン画像"></p>
 </header>
 <!-- ナビ部分 -->
 <nav class="title">
@@ -139,6 +139,7 @@ nav #list{
             </li>
             <li class="list"><a class="line" href="access.html">Q&A</a></li>
             <li class="list"><a class="line" href="inquiry.php">お問合せ</a></li>
+            <li class="list"><a class="line" href="logout.php">ログアウト</a></li>
         </ul>
     </div>
 </nav>
