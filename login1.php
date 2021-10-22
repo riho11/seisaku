@@ -25,6 +25,7 @@
     $stmt->bindParam(":email",$_POST["email"]);
     $stmt->execute();
     $result=$stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt = null;
     if($result):
         if(password_verify($_POST["pass"],$result["pass"])):
                 session_start();
@@ -33,6 +34,13 @@
                 $_SESSION['pass']=$_POST["pass"];
                 $_SESSION["namae"] = $result["namae"];
                 $_SESSION["id"] = $result["id"];
+    // 画像表示
+                $stmt=$pdo->prepare("SELECT `img` FROM `img` WHERE `regist_id`=:regist_id");
+                $stmt->bindParam(":regist_id",$result["id"]);
+                $stmt->execute();
+                $img=$stmt->fetch(PDO::FETCH_ASSOC);
+                $stmt = null;
+                $_SESSION["img"] = $img["img"];
                 header("Location: http://".$_SERVER['HTTP_HOST']."/seisaku/login2.php");
         else:
             $errors = "パスワードが違います";
