@@ -17,8 +17,7 @@ function current_age($month,$day,$year){
         if(date("d") > $day):
             return date("Y") - $year;
         elseif(date("d") == $day):
-            echo "お誕生日おめでとう";
-            return "祝" . date("Y") - $year;
+            return date("Y") - $year;
         else:
             return date("Y") - $year - 1;
         endif;
@@ -57,7 +56,7 @@ function bodyfat_difference($record,$gole){
 //BMI診断計算式
 function bmi($weight,$height){
     $bmiheight = $height / 100;
-    $bmisum = $weight / ($bmiheight * $bmiheight); 
+    $bmisum = $weight / ($bmiheight * $bmiheight);
     return $bmisum;
 }
 

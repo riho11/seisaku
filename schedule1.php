@@ -45,7 +45,7 @@
 
     $goal_month = null;
     if(!isset($_POST["goal_month"])):
-        $errors["goal_month"] = "目標日の月を選択してください";
+        $errors["goal_month"] = "目標日の月を選択してください";  
     else:
         $goal_month = $_POST["goal_month"];
     endif;
@@ -53,6 +53,11 @@
     $goal_day = null;
     if(!isset($_POST["goal_day"])):
         $errors["goal_day"] = "目標日の日を選択してください";
+    elseif($_POST["goal_year"] === date("Y")):
+        if($_POST["goal_month"] <= date("m") && $_POST["goal_day"] <= date("d")):
+            $errors[""] = "未来の日付を選択してください";
+        endif;
+        $goal_day = $_POST["goal_day"];
     else:
         $goal_day = $_POST["goal_day"];
     endif;
@@ -75,13 +80,21 @@
 
     if(count($errors)===0):
 // SQL取得
-        $stmt=$pdo->prepare("SELECT `id`,`email` FROM `regist`WHERE `email`=:email");
+        $stmt=$pdo->prepare("SELECT `id`,`email` FROM `regist` WHERE `email`=:email");
         $stmt->bindParam(":email",$_SESSION["email"]);
         $stmt->execute();
         $result=$stmt->fetch(PDO::FETCH_ASSOC);
         $stmt = null;
         if($_SESSION["email"] === $result["email"]):
-            $stmt = $pdo -> prepare("SELECT COUNT(*) FROM`schedule`WHERE `regist_id`=:regist_id");
+            // imgの画像情報をSESSIONに取得
+            $stmt=$pdo->prepare("SELECT `img`,`regist_id` FROM `img` WHERE `regist_id`=:regist_id");
+            $stmt->bindParam(":regist_id",$result["id"]);
+            $stmt->execute();
+            $img=$stmt->fetch(PDO::FETCH_ASSOC);
+            $stmt = null;
+            $_SESSION["img"] = $img["img"];
+            // 「schedule」内に$result["id"]と同じregist_idが存在しないか確認
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM `schedule` WHERE `regist_id`=:regist_id");
             $stmt->bindParam(":regist_id",$result["id"]);
             $stmt->execute();
             $count = $stmt->fetchColumn();
@@ -103,7 +116,7 @@
             else: ?>
                 <p>既に目標は設定されています</p> 
                 <style>.goal{ display: none; }</style><!-- 登録完了を非表示 -->
-<?php   endif;
+<?php       endif;
         endif;
     endif;
     $pdo = null;

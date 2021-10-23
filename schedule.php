@@ -64,7 +64,7 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
                 <tr>
                     <th><label for="goal_period"><span class="hissu">必須</span>目標期間</label></th>
                     <td>
-                        <select id="goal_year" name="goal_year">
+                        <select id="goal_year" name="goal_year" required>
                             <option value="" disabled selected style="display:none;">-</option>
                             <option value="2021">2021</option>
                             <option value="2022">2022</option>
@@ -72,7 +72,7 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
                             <option value="2024">2024</option>
                         </select>
                         年
-                        <select id="goal_month" name="goal_month">
+                        <select id="goal_month" name="goal_month" required>
                             <option value="" disabled selected style="display:none;">-</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
@@ -88,7 +88,7 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
                             <option value="12">12</option>
                         </select>
                         月
-                        <select id="goal_day" name="goal_day">    
+                        <select id="goal_day" name="goal_day" required>    
                             <option value="" disabled selected style="display:none;">-</option>
                             <option value="1">1</option>
                             <option value="2">2</option>
