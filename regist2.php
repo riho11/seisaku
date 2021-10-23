@@ -83,6 +83,11 @@
     $month = null;
     if(!isset($_POST["month"])):
         $errors["month"] = "生年月日の月を選択してください";
+    elseif(isset($_POST["year"]) && $_POST["year"] === date("Y")):
+        if($_POST["month"] > date("m")):
+            $errors[""] = "正しい生年月日を選択してください";
+        endif;
+        $month = $_POST["month"];
     else:
         $month = $_POST["month"];
     endif;
@@ -90,6 +95,11 @@
     $day = null;
     if(!isset($_POST["day"])):
         $errors["day"] = "生年月日の日を選択してください";
+    elseif($_POST["month"] === date("m")):
+        if($_POST["day"] > date("d")):
+            $errors[""] = "正しい生年月日を選択してください";
+        endif;
+        $day = $_POST["day"];
     else:
         $day = $_POST["day"];
     endif;
@@ -110,6 +120,10 @@
         $errors["weight"] = "体重の形式が違います";
     else:
         $weight = $_POST["weight"];
+    endif;
+
+    if(!checkdate($month, $day, $year)):
+        $errors[""] = "存在しない日付です";
     endif;
     
     $_SESSION['email']=$_POST["email"];

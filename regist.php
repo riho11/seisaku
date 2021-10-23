@@ -59,7 +59,7 @@
                         <tr>
                             <th><label for="birth"><span class="hissu">必須</span>生年月日</label></th>
                             <td colspan="3">
-                                <select id="year" name="year">
+                                <select id="year" name="year" required>
                                     <option value="" disabled selected style="display:none;">-</option>
                                     <option value="1920">1920</option>
                                     <option value="1921">1921</option>
@@ -165,7 +165,7 @@
                                     <option value="2021">2021</option>
                                 </select>
                                 年
-                                <select id="month" name="month">
+                                <select id="month" name="month" required>
                                     <option value="" disabled selected style="display:none;">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
@@ -181,7 +181,7 @@
                                     <option value="12">12</option>
                                 </select>
                                 月
-                                <select id="day" name="day">    
+                                <select id="day" name="day" required>    
                                     <option value="" disabled selected style="display:none;">-</option>
                                     <option value="1">1</option>
                                     <option value="2">2</option>
