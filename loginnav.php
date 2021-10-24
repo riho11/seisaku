@@ -132,12 +132,12 @@ nav #list{
                 <div>
                     <ul>
                         <li class="menu"><a href="weight.php">体重</a></li>
-                        <li class="menu"><a href="menu.html">食事</a></li>
-                        <li class="menu"><a href="menu.html">運動</a></li>
+                        <li class="menu"><a href="meal.php">食事</a></li>
+                        <li class="menu"><a href="sports.php">運動</a></li>
                     </ul>
                 </div>
             </li>
-            <li class="list"><a class="line" href="access.html">Q&A</a></li>
+            <li class="list"><a class="line" href="q&a.php">Q&A</a></li>
             <li class="list"><a class="line" href="inquiry.php">お問合せ</a></li>
             <li class="list"><a class="line" href="logout.php">ログアウト</a></li>
         </ul>
