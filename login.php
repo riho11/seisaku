@@ -52,8 +52,6 @@
                 </form>
             </div>
         </main>
-            
-            <p><a href="regist.php">新規会員登録</a></p>
 <!-- フッター部分呼び出し -->
 <?php
     require_once 'footer.php';
