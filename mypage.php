@@ -218,6 +218,7 @@
     <p><a href="edit.php">パスワードの変更</a></p>
     <p><a href="edit.php">メールアドレスの変更</a></p>
     <p><a href="img.php">画像変更</a></p>
+    <p><a href="withdrawal.php">退会</a></p>
 <br>
 	<p><a href='logout.php'>ログアウト</a></p>
 <?php else: ?>
