@@ -22,3 +22,21 @@ html{
     margin: 0 auto;
 }
 
+.text_main{
+    text-align: center;
+    width: 80%;
+    margin: 0 auto;
+    padding: 50px;
+}
+
+h1{
+    font-size: 200%;
+}
+
+p{
+    line-height: 5px;
+}
+
+.nyoro_img{
+    text-align: center;
+}

@@ -31,8 +31,8 @@
                         </tr>
                         <tr>
                             <th><label for="pass"><span class="hissu">必須</span>パスワード</label></th>
-                            <td><input type="password" id="pass" name="pass" placeholder="******" required></td>
-                            <td><span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span></td>
+                            <td><input type="password" id="pass" name="pass" placeholder="******" required>
+                            <div class="annotation"><span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
 <!-- パスワード表示、非表示設定 -->
                             <script>
                                 function pushHideButton() {
@@ -46,19 +46,18 @@
                                     btnEye.className = "fa fa-eye-slash";
                                     }
                                 }
-                            </script>
-                            <td>(6～12文字以内)</td>
+                            </script>(6～12文字以内)</div></td>
                         </tr>
                     <!-- パスワード(確認)：<input type="password" name="pass2" >確認の為、同じパスワードを入力してください。<br> -->
                         <tr>
                             <th><label for="sex"><span class="hissu">必須</span>性別</label></th>
                             <td><input type="radio" id="sex" name="sex" value="0">男
-                            <input type="radio" id="sex" name="sex" value="1">女</td>
-                            <td colspan='2'>※診断に必要な項目です。</td>
+                            <input type="radio" id="sex" name="sex" value="1">女
+                            <div class="annotation">※診断に必要な項目です。</div></td>
                         </tr>
                         <tr>
                             <th><label for="birth"><span class="hissu">必須</span>生年月日</label></th>
-                            <td colspan="3">
+                            <td>
                                 <select id="year" name="year" required>
                                     <option value="" disabled selected style="display:none;">-</option>
                                     <option value="1920">1920</option>
@@ -227,7 +226,7 @@
                             <td><input type="text" id="weight" name="weight"  placeholder="50" required> kg</td>
                         </tr>
                         <tr class="tr-center">
-                            <td colspan="4"><input class="btn btn-border" type="submit" value="登録"></td>
+                            <td colspan="2"><input class="btn btn-border" type="submit" value="登録"></td>
                         </tr>
                     </table>
                 </form>

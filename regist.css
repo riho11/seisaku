@@ -1,4 +1,54 @@
 @charset "UTF-8";
+/* リセットCSS */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
 
 /* ↓フォント指定↓ */
 @font-face {
@@ -6,12 +56,6 @@
     src: url('font/apjapanesefont.woff') format('woff'),
          url('font/apjapanesefont.woff2') format('woff2'),
          url('font/APJapanesefont.ttf') format('truetype');
-}
-/* ↑フォント指定↑ */
-
-html,body,a,h1{
-    margin: 0;
-    padding: 0;
 }
 
 html{
@@ -22,6 +66,21 @@ html{
 #wrapper{
     width: 100%;
     margin: 0 auto;
+}
+
+h1{
+    font-size: 2em;
+    font-weight: bolder;
+    margin: 0.67em 0;
+}
+
+th{
+    font-weight: bolder;
+    font-size: 110%;
+}
+.annotation{
+    line-height: 30px;
+    font-size: 90%;
 }
 
 /* フォーム項目設定 */
@@ -53,7 +112,7 @@ html{
 
 main h1{
     text-align: center;
-    margin-top: 30px;
+    margin-top: 50px;
 }
 
 .under {
@@ -78,7 +137,7 @@ table{
     padding: 5px;
     border-radius: 4px;
     border: none;
-    box-shadow: 0 0 0 1px #9b9a9a;
+    box-shadow: 0 0 0 1px #ccc;
 }
 /* テキストを選択した時の色 */
 #namae:focus,#email:focus,#pass:focus,#year:focus,#month:focus,#day:focus,#height:focus,#weight:focus{
@@ -87,13 +146,49 @@ table{
 }
 /* サンプル文字の色 */
 ::placeholder{
-    color: rgb(173, 173, 173);
+    color: rgb(192, 190, 190);
 }
 
 #pass {
     border: none; /* デフォルトの枠線を消す */
   }
 
+
+  @media screen and (min-width:0px) and (max-width:840px){
+     
+    .form-table td {
+        display: block;
+        box-sizing: border-box;
+        width:100%;
+        border-top: 2px solid #d7d7d7;
+        padding: 20px;
+    
+    }
+    
+    .form-table th {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        border-top: 2px solid #d7d7d7;
+        padding: 20px;
+        background: #ffecea;
+        padding-left: 10px;
+        position: relative;
+        text-align: left;
+    }
+
+    main{
+        width: 100%;
+    }
+    
+    #height,#weight{
+        width: 50%;
+    }
+
+    #year,#month,#day{
+        width: 20%;
+    }
+}
 
 
 @media screen and (min-width:841px){
@@ -105,7 +200,7 @@ table{
 	}
 
     main{
-        width: 60%;
+        width: 50%;
         margin: 0 auto;
     }
     
