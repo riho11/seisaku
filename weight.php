@@ -64,37 +64,39 @@
             $record_bodyfat = $_POST["record_bodyfat"];
         endif;
         
-        if(count($errors)===0):
+        if(count($errors) === 0):
     //SQL実行(SELECT)
-            $stmt=$pdo->prepare("SELECT `id`,`email` FROM `regist`WHERE `email`=:email");
-            $stmt->bindParam(":email",$_SESSION["email"]);
+          $stmt=$pdo->prepare("SELECT `id`,`email` FROM `regist` WHERE `email`=:email");
+          $stmt->bindParam(":email",$_SESSION["email"]);
+          $stmt->execute();
+          $result=$stmt->fetch(PDO::FETCH_ASSOC);
+          $stmt = null;
+          if($_SESSION["email"] === $result["email"]):
+            // 同じ日付がないか確認
+            $date = new DateTime();
+            $date = $date->format('Ymd');
+            $stmt = $pdo->prepare("SELECT COUNT(*) FROM`weight` WHERE `regist_id`=:regist_id AND `date`=:date");
+            $stmt->bindParam(":regist_id",$result["id"]);
+            $stmt->bindParam(":date",$date);
             $stmt->execute();
-            $result=$stmt->fetch(PDO::FETCH_ASSOC);
+            $count = $stmt->fetchColumn();
             $stmt = null;
-            if($_SESSION["email"] === $result["email"]):
-                $date = new DateTime();
-                $date = $date->format('Ymd');
-                $stmt = $pdo -> prepare("SELECT COUNT(*) FROM`weight`WHERE `date`=:date");
-                $stmt->bindParam(":date",$date);
+            if($count === 0):
+//SQL保存
+                $sql='INSERT INTO `weight`(`date`,`record_weight`,`record_bodyfat`,`regist_id`) VALUES(:date,:record_weight,:record_bodyfat,:regist_id)';
+                $stmt = $pdo -> prepare($sql);
+                $stmt->bindParam(':date',$date);
+                $stmt->bindParam(':record_weight',$record_weight);
+                $stmt->bindParam(':record_bodyfat',$record_bodyfat);
+                $stmt->bindParam(':regist_id',$result["id"]);
                 $stmt->execute();
-                $count = $stmt->fetchColumn();
                 $stmt = null;
-                if($count === 0):
-    //SQL保存
-                    $sql='INSERT INTO `weight`(`date`,`record_weight`,`record_bodyfat`,`regist_id`) VALUES(:date,:record_weight,:record_bodyfat,:regist_id)';
-                    $stmt = $pdo -> prepare($sql);
-                    $stmt->bindParam(':date',$date);
-                    $stmt->bindParam(':record_weight',$record_weight);
-                    $stmt->bindParam(':record_bodyfat',$record_bodyfat);
-                    $stmt->bindParam(':regist_id',$result["id"]);
-                    $stmt->execute();
-                    $stmt = null;
-                else: ?>
-                    <p>既に本日の体重は入力しました</p> 
-                    <p>また明日入力お願いします</p> 
-                    <style>.goal{ display: none; }</style><!-- 登録完了を非表示 -->
+            else: ?>
+                <p>既に本日の体重は入力しました</p> 
+                <p>また明日入力お願いします</p> 
+                <style>.goal{ display: none; }</style><!-- 登録完了を非表示 -->
     <?php   endif;
-            endif;
+          endif;
         endif;
 ?>
 
@@ -131,6 +133,7 @@
 <p>※記録した日のみが表示されます</p>
 <p>未登録は０になります</p>
 
+
 <!-- 折れ線グラフ -->
         <div style="width:800px;" >
     <canvas id="chart"></canvas>
@@ -145,39 +148,44 @@
     type: 'line',
     data: {
       // x軸の各メモリ 
-      labels: [ // 日にち取得
-<?php 
-  $week_past = date("Y-m-d",strtotime("-1 week"));
-  foreach($response as $array):
-    if($week_past < $array["date"]):
-      $str_date = explode("-",$array["date"]);
-      echo $str_date[2]. ',';
-    endif;
-  endforeach;
+      labels: [<?php 
+$week_past = date("Y-m-d",strtotime("-6 day"));
+foreach($response as $array):
+  if($week_past <= $array["date"]):
+    $str = explode("-",$array["date"]);
+    echo $str[2]. ',';
+  endif;
+endforeach;
 ?>],
       datasets: [
         {
           label: '体重',
-        
-          data: [ // 体重取り出し
-<?php foreach($response as $array):
-        echo $array["record_weight"] . ',';
-      endforeach;
+          spanGaps: true, // 欠損値を補完
+          data: [<?php
+$week_past = date("Y-m-d",strtotime("-6 day"));
+foreach($response as $array):
+  if($week_past <= $array["date"]):
+    echo $array["record_weight"] . ',';
+  endif;
+endforeach;
 ?>],
+          lineTension: 0,
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
           label: '体脂肪',
-          data: [ // 体脂肪取得(NULLの時０を代入)
-<?php foreach($response as $array):
-  if(is_null($array["record_bodyfat"])):
-    echo "0". ',';
-  else:
+          spanGaps: true, // 欠損値を補完
+          data: [ // 体脂肪取得
+<?php
+$week_past = date("Y-m-d",strtotime("-6 day"));
+foreach($response as $array):
+  if($week_past <= $array["date"]):
     echo $array["record_bodyfat"] . ',';
   endif;
-  endforeach;
+endforeach; 
 ?>],
+          lineTension: 0,
           borderColor: "#2260ea",
           backgroundColor: "#00000000"
         }
@@ -212,40 +220,46 @@
     // グラフの種類：折れ線グラフを指定
     type: 'line',
     data: {
-      // x軸の各メモリ 
       labels: [ // 日にち取得
 <?php 
-  $month_past = date("Y-m-d",strtotime("-1 month"));
-  foreach($response as $array):
-    if($month_past < $array["date"]):
-      $str_date = explode("-",$array["date"]);
-      echo $str_date[1].".".$str_date[2]. ',';
-    endif;
-  endforeach;
+$month_past = date("Y-m-d",strtotime("-1 month"));
+foreach($response as $array):
+  if($month_past < $array["date"]):
+    $str_date = explode("-",$array["date"]);
+    echo $str_date[1].".".$str_date[2]. ',';
+  endif;
+endforeach;
 ?>],
       datasets: [
         {
           label: '体重',
-        
+          spanGaps: true, // 欠損値を補完
           data: [ // 体重取り出し
-<?php foreach($response as $array):
-        echo $array["record_weight"] . ',';
-      endforeach;
+<?php
+$month_past = date("Y-m-d",strtotime("-1 month"));
+foreach($response as $array):
+  if($month_past < $array["date"]):
+    echo $array["record_weight"] . ',';
+  endif;
+endforeach;
 ?>],
+          lineTension: 0,
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
           label: '体脂肪',
+          spanGaps: true, // 欠損値を補完
           data: [ // 体脂肪取得(NULLの時０を代入)
-<?php foreach($response as $array):
-  if(is_null($array["record_bodyfat"])):
-    echo "0". ',';
-  else:
+<?php
+$month_past = date("Y-m-d",strtotime("-1 month"));
+foreach($response as $array):
+  if($month_past < $array["date"]):
     echo $array["record_bodyfat"] . ',';
   endif;
-  endforeach;
+endforeach; 
 ?>],
+          lineTension: 0,
           borderColor: "#2260ea",
           backgroundColor: "#00000000"
         }
@@ -294,26 +308,33 @@
       datasets: [
         {
           label: '体重',
-        
+          spanGaps: true, // 欠損値を補完        
           data: [ // 体重取り出し
-<?php foreach($response as $array):
-        echo $array["record_weight"] . ',';
-      endforeach;
+<?php
+$year_past = date("Y-m-d",strtotime("-1 year"));
+foreach($response as $array):
+  if($year_past < $array["date"]):
+    echo $array["record_weight"] . ',';
+  endif;
+endforeach;
 ?>],
+          lineTension: 0,
           borderColor: "#ec4343",
           backgroundColor: "#00000000"
         },
         {
           label: '体脂肪',
-          data: [ // 体脂肪取得(NULLの時０を代入)
-<?php foreach($response as $array):
-  if(is_null($array["record_bodyfat"])):
-    echo "0". ',';
-  else:
+          spanGaps: true, // 欠損値を補完   
+          data: [ // 体脂肪取得
+<?php
+$year_past = date("Y-m-d",strtotime("-1 year"));
+foreach($response as $array):
+  if($year_past < $array["date"]):
     echo $array["record_bodyfat"] . ',';
   endif;
-  endforeach;
+endforeach;
 ?>],
+          lineTension: 0,
           borderColor: "#2260ea",
           backgroundColor: "#00000000"
         }
