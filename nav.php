@@ -122,8 +122,8 @@ nav #list{
                 <ul id="list">
                     <li class="list"><a class="line" href="regist.php">新規登録</a></li>
                     <li class="list"><a class="line" href="login.php">ログイン</a></li>
-                    <li class="list"><a class="line" href="access.html">Q&A</a></li>
-                    <li class="list"><a class="line" href="form.html">お問合せ</a></li>
+                    <li class="list"><a class="line" href="q&a.php">Q&A</a></li>
+                    <li class="list"><a class="line" href="firstinquiry.php">お問合せ</a></li>
                 </ul>
             </div>
         </nav>
