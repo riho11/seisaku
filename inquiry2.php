@@ -60,7 +60,6 @@ $mail='pinooniq0301@gmail.com';
 	<p>ログインしなおしてください</p>
 	<p><a href='login.php'>ログインページ</a></p>
 <?php endif; ?>
-        </main>
 <!-- フッター部分呼び出し -->
 <?php
     require_once 'footer.php';
