@@ -68,12 +68,6 @@ html{
     margin: 0 auto;
 }
 
-h1{
-    font-size: 2em;
-    font-weight: bolder;
-    margin: 0.67em 0;
-}
-
 th{
     font-weight: bolder;
     font-size: 110%;
@@ -112,7 +106,9 @@ th{
 
 main h1{
     text-align: center;
-    margin-top: 50px;
+    font-size: 2em;
+    font-weight: bolder;
+    margin: 1em 0 0.67em;
 }
 
 .under {
@@ -132,7 +128,7 @@ table{
     width: 100%;
 }
 /* テキストの枠線 */
-#namae,#email,#pass,#year,#month,#day,#height,#weight{
+#namae,#email,#pass,#year,#month,#day,#height,#weight, #comment, #tel{
     width: 100%;
     padding: 5px;
     border-radius: 4px;
@@ -140,7 +136,7 @@ table{
     box-shadow: 0 0 0 1px #ccc;
 }
 /* テキストを選択した時の色 */
-#namae:focus,#email:focus,#pass:focus,#year:focus,#month:focus,#day:focus,#height:focus,#weight:focus{
+#namae:focus,#email:focus,#pass:focus,#year:focus,#month:focus,#day:focus,#height:focus,#weight:focus, #comment:focus,#tel:focus{
     outline: 0;
     box-shadow: 0 0 0 2px rgb(33, 150, 243) ;
 }
@@ -153,77 +149,118 @@ table{
     border: none; /* デフォルトの枠線を消す */
   }
 
-
-  @media screen and (min-width:0px) and (max-width:840px){
-     
-    .form-table td {
-        display: block;
-        box-sizing: border-box;
-        width:100%;
-        border-top: 2px solid #d7d7d7;
-        padding: 20px;
-    
-    }
-    
-    .form-table th {
-        display: block;
-        box-sizing: border-box;
-        width: 100%;
-        border-top: 2px solid #d7d7d7;
-        padding: 20px;
-        background: #ffecea;
-        padding-left: 10px;
-        position: relative;
-        text-align: left;
-    }
-
-    main{
-        width: 100%;
-    }
-    
-    #height,#weight{
-        width: 50%;
-    }
-
-    #year,#month,#day{
-        width: 20%;
-    }
+/* スマホサイズ */
+@media screen and (min-width:0px) and (max-width:599px){
+.form-table td {
+    display: block;
+    box-sizing: border-box;
+    width:100%;
+    border-top: 2px solid #d7d7d7;
+    padding: 20px;
+    margin: auto;
 }
 
+.form-table th {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-top: 2px solid #d7d7d7;
+    padding: 20px;
+    background: #ffecea;
+    padding-left: 10px;
+    position: relative;
+    text-align: left;
+}
 
-@media screen and (min-width:841px){
+main{
+    width: 100%;
+}
 
-	#wrapper{
-		flex-wrap:wrap;
-		max-width:2000px;
-		margin:0 auto;
-	}
+#height,#weight{
+    width: 50%;
+}
 
-    main{
-        width: 50%;
-        margin: 0 auto;
-    }
-    
-    .form-table td {
-        padding: 20px;
-    }
-       
-    .form-table th {
-        padding: 20px;
-        vertical-align: top;
-        padding-left: 50px;
-        text-align: left;
-        width: 200px;
-    }
-    
-    #height,#weight{
-        width: 50%;
-    }
+#year,#month,#day{
+    width: 20%;
+}
+}
+/* タブレットサイズ */
+@media screen and (min-width:600px) and (max-width:1024px){
+.form-table td {
+    display: block;
+    box-sizing: border-box;
+    width:100%;
+    border-top: 2px solid #d7d7d7;
+    padding: 20px;
 
-    #year,#month,#day{
-        width: 20%;
-    }
+}
 
+.form-table th {
+    display: block;
+    box-sizing: border-box;
+    width: 100%;
+    border-top: 2px solid #d7d7d7;
+    padding: 20px;
+    background: #ffecea;
+    padding-left: 10px;
+    position: relative;
+    text-align: left;
+}
+
+main{
+    width: 100%;
+}
+
+#height,#weight{
+    width: 50%;
+}
+
+#year,#month,#day{
+    width: 20%;
+}
+}
+/* PCサイズ */
+@media screen and (min-width:1025px){
+#wrapper{
+    flex-wrap:wrap;
+    max-width:2000px;
+    margin:0 auto;
+}
+
+main{
+    width: 50%;
+    margin: 0 auto;
+}
+
+.form-table td {
+    padding: 20px;
+}
+
+.form-table th {
+    padding: 20px;
+    vertical-align: top;
+    text-align: left;
+    width: 200px;
+}
+
+#height,#weight{
+    width: 50%;
+}
+
+#year,#month,#day{
+    width: 15%;
+}
+
+.form-table .birth{
+    text-align: right;
+    padding-top: 0;
+}
+.form-table #birth{
+    padding-bottom: 0;
+}
+.form-table .comment{
+    width: 250px;
+}
 }
 
 /* regist1.phpのページcss */
@@ -242,4 +279,13 @@ table{
     padding: 20px;
     text-align: left;
   }
- 
+ .error{
+     text-align: center;
+ }
+
+ .sukima{
+     padding: 20px 0;
+ }
+ .regist-check{
+     width: 70%;
+ }

@@ -15,17 +15,29 @@
 <body>
     <div id="wrapper">
 <?php
-// ナビ部分呼び出し
-    require_once 'loginnav.php';
 // DB呼び出し
     require_once 'db.php';
 // 関数呼び出し
     require_once 'function.php';
     
-    if(isset($_SESSION["email"])):
+    if(!isset($_SESSION["email"])):
+    
+//ナビ部分呼び出し
+    require_once 'nav.php';
 ?>
+    <style>.error-name{ display:none;}</style>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';?>
+
     <main>
-        <h1>マイページ</h1>
     <?php
     // Warningエラーもcatchする
     function error_handler($severity, $message, $filename, $lineno) {
@@ -47,7 +59,7 @@
             echo "目標が設定されていません<br>";
             echo "目標を設定しましょう！<br>";
             echo "<p><a href='schedule.php'>目標設定へ</a></p>";?>
-</main>
+        </main>
 <?php
         require_once 'footer.php';?>
     </div>
@@ -57,106 +69,20 @@
         }
 
     if($_SESSION["email"] === $result["email"]):
-    ?>
-            <table border="1">
-                <tr>
-                    <th>ニックネーム</th>
-                    <td><?php echo $result["namae"]; ?></td>
-                </tr>
-                <tr>
-                    <th>メールアドレス</th>
-                    <td><?php echo $result["email"]; ?></td>
-                </tr>
-                <tr>
-                    <th>性別</th>
-                    <td><?php gender($result["sex"]); ?></td>
-                </tr>
-                <tr>
-                    <th rowspan="2">生年月日</th>
-                    <td><?php echo $result["year"] ."年" . $result["month"] ."月". $result["day"] ."日"; ?></td>
-                </tr>
-                <tr>
-                    <td>現在の年齢　<?php 
-                    $age = current_age($result["month"],$result["day"],$result["year"]);
-                    echo $age; ?></td>
-                </tr>
-                <tr>
-                    <th>身長</th>
-                    <td><?php echo $result["height"] . "cm"; ?></td>
-                </tr>
-                <tr>
-                    <th rowspan="4">体重</th>
-                    <td>初期　<?php echo $result["weight"] . "kg"; ?></td>
-                </tr>
-                <tr>
-                    <td>現在　
-                <?php 
-                try { // 現在の体重が設定されていない場合、例外処理で初期の体重を記載
-                    // SQL実行(weight選択)
-                    $stmt=$pdo->prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY date DESC");
-                    $stmt->bindParam(":regist_id",$result["regist_id"]);
-                    $stmt->execute();
-                    $record=$stmt->fetch(PDO::FETCH_ASSOC);
-                    $stmt = null;
-                     echo $record["record_weight"] . "kg";
-                 } catch(Exception $e) {
-                     echo $result["weight"] . "kg";
-                 } ?></td>
-                </tr>
-                <tr>
-                    <td>目標　<?php echo $result["goal_weight"] . "kg"; ?></td>
-                </tr>
-                <tr>
-                    <td>
-                <?php 
-                try{ // 目標までの残り体重。現在の体重が設定されていない場合、例外処理で初期の体重を記載
-                    weight_difference($record["record_weight"],$result["goal_weight"]);
-                } catch(Exception $e){
-                    weight_difference($result["weight"],$result["goal_weight"]);
-                } ?></td>
-                </tr>
-                <tr>
-                    <th rowspan="4">体脂肪</th>
-                    <td>初期　<?php echo null($result["bodyfat"]); ?></td>
-                </tr>
-                <tr>
-                    <td>現在　
-                <?php
-                try{ // 現在の体脂肪が記録されていない場合、初期の体脂肪を記載
-                    if(is_null($record["record_bodyfat"])):
-                        echo null($result["bodyfat"]);
-                    else:
-                        echo $record["record_bodyfat"] . " ％";
-                    endif;
-                } catch(Exception $e){
-                    echo null($result["bodyfat"]);
-                } ?></td>
-                </tr>
-                <tr>
-                    <td>目標　<?php echo null($result["goal_bodyfat"]); ?></td>
-                </tr>
-                <tr>
-                    <td>
-                <?php
-                // 体脂肪の残り目標
-                if(is_null($result["goal_bodyfat"])):
-                    echo "目標が未設定です";
-                elseif(isset($record["record_bodyfat"])):
-                    bodyfat_difference($record["record_bodyfat"],$result["goal_bodyfat"]);
-                elseif(isset($result["bodyfat"])):
-                    bodyfat_difference($result["bodyfat"],$result["goal_bodyfat"]);
-                elseif(is_null($result["bodyfat"])):
-                    echo "体脂肪が未設定です";
-                endif;?></td>
-                </tr>
-
+?>
+        <div class="topmy">
+            <h1>マイページ</h1>
+            <p><a href="edit.php">編集</a>
+            <a href="withdrawal.php">退会</a></p>
+        </div>
 <!-- 残り日数計算 -->
-                <tr>
-                    <td>目標日</td>
-                    <td><?php echo $result["goal_year"] . '-' . $result["goal_month"] . '-' . $result["goal_day"]; ?></td>
-                </tr>
-                <tr><td colspan="2">
-                    <?php
+        <table class="goaldate">
+            <tr>
+                <th><?php echo $result["goal_year"] . '年' . $result["goal_month"] . '月' . $result["goal_day"] . '日'; ?>までにやせる！</th>
+            </tr>
+            <tr>
+                <td>
+                <?php
                     $date1 = new DateTime($result["goal_year"] . '-' . $result["goal_month"] . '-' . $result["goal_day"] . '24:0:0'); 
                     $date2 = new DateTime(); 
                     $diff = $date2->diff($date1); // 目標と現在の差分を求める
@@ -170,65 +96,150 @@
                         echo $diff->format('残り%a日');
                     endif;
                     ?>
-                </td></tr>
+                </td>
+            </tr>
+        </table>
+
+<!-- 体重、体脂肪の現在などの記録 -->
+        <table class="record-table">
+            <tr>
+                <th></th>
+                <th>体重</th>
+                <th>体脂肪</th>
+            </tr>
+            <tr>
+                <td>初期　</td>
+                <td><?php echo $result["weight"] . "kg"; ?></td>
+                <td><?php echo null($result["bodyfat"]); ?></td>
+            </tr>
+            <tr>
+                <td>現在　</td>
+                <td>
+            <?php 
+                try { // 現在の体重が設定されていない場合、例外処理で初期の体重を記載
+                    // SQL実行(weight選択)
+                    $stmt=$pdo->prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY date DESC");
+                    $stmt->bindParam(":regist_id",$result["regist_id"]);
+                    $stmt->execute();
+                    $record=$stmt->fetch(PDO::FETCH_ASSOC);
+                    $stmt = null;
+                     echo $record["record_weight"] . "kg";
+                 } catch(Exception $e) {
+                     echo $result["weight"] . "kg";
+                 } ?></td>
+                 <td>
+                <?php
+                try{ // 現在の体脂肪が記録されていない場合、初期の体脂肪を記載
+                    if(is_null($record["record_bodyfat"])):
+                        echo null($result["bodyfat"]);
+                    else:
+                        echo $record["record_bodyfat"] . " ％";
+                    endif;
+                } catch(Exception $e){
+                    echo null($result["bodyfat"]);
+                } ?></td>
+            </tr>
+            <tr>
+                <td>目標　</td>
+                <td><?php echo $result["goal_weight"] . "kg"; ?></td>
+                <td><?php echo null($result["goal_bodyfat"]); ?></td>
+            </tr>
+            <tr class="goal-table">
+                <td>目標まで残り</td>
+                <td>
+                <?php 
+                try{ // 目標までの残り体重。現在の体重が設定されていない場合、例外処理で初期の体重を記載
+                    weight_difference($record["record_weight"],$result["goal_weight"]);
+                } catch(Exception $e){
+                    weight_difference($result["weight"],$result["goal_weight"]);
+                } ?></td>
+                <td>
+                <?php
+                // 体脂肪の残り目標
+                if(is_null($result["goal_bodyfat"])):
+                    echo "目標が未設定です";
+                elseif(isset($record["record_bodyfat"])):
+                    bodyfat_difference($record["record_bodyfat"],$result["goal_bodyfat"]);
+                elseif(isset($result["bodyfat"])):
+                    bodyfat_difference($result["bodyfat"],$result["goal_bodyfat"]);
+                elseif(is_null($result["bodyfat"])):
+                    echo "体脂肪が未設定です";
+                endif;?></td>
+            </tr>
+        </table>
+
+
+    
+        <h1 class="myh1">私のプロフィール</h1>
+            <table class="mytable">
+                <tr>
+                    <th>ニックネーム</th>
+                    <td><?php echo $result["namae"]; ?></td>
+                    <th>ＢＭＩ</th>
+                    <td>
+                    <?php
+                    // BMI診断
+                    try{ // 現在の体重が記録されていない場合、初期の体重にて計算
+                        $bmisum = bmi($record["record_weight"],$result["height"]);
+                        echo round($bmisum,1) ."";
+                        bmi_judgment(round($bmisum,1));
+                    } catch(Exception $e){
+                        $bmisum = bmi($result["weight"],$result["height"]);
+                        echo round($bmisum,1);
+                        bmi_judgment(round($bmisum,1));
+                    }?>
+                    </td>
+                </tr>
+                <tr>
+                    <th>性別</th>
+                    <td><?php gender($result["sex"]); ?></td>
+                    <th>適正体重</th>
+                    <td><?php
+                    // 適正体重を四捨五入表示
+                    echo Appropriate_weight($result["height"]) . "kg";?></td>
+                </tr>
+                <tr>
+                    <th rowspan="2">生年月日</th>
+                    <td><?php echo $result["year"] ."年" . $result["month"] ."月". $result["day"] ."日"; ?></td>
+                    <th>美容体重</th>
+                    <td><?php
+                    echo "" . beauty_weight($result["height"]) . "kg";?></td>
+                </tr>
+                <tr>
+                    <td>現在の年齢　<?php 
+                    $age = current_age($result["month"],$result["day"],$result["year"]);
+                    echo $age; ?></td>
+                    <th>モデル体重</th>
+                    <td><?php
+                    echo "" . model_weight($result["height"]) . "kg";?></td>
+                </tr>
+                <tr>
+                    <th>身長</th>
+                    <td><?php echo $result["height"] . "cm"; ?></td>
+                    <th></th>
+                    <td></td>
+                </tr>
             </table>
+            
+            <p class="basics">あなたの基礎代謝量は　
+                <span><?php
+                // 基礎代謝(国立健康・栄養研究所の式)
+                        $age = current_age($result["month"],$result["day"],$result["year"]);
+                            if($result["sex"] == 0):
+                                echo basicsman($result["weight"],$result["height"],$age) . "kcal/日";
+                            elseif($result["sex"] == 1):
+                                echo basicswoman($result["weight"],$result["height"],$age) . "kcal/日";
+                            endif;?></span>
+            です。</p>
 <?php
-// BMI診断
-        try{ // 現在の体重が記録されていない場合、初期の体重にて計算
-            $bmisum = bmi($record["record_weight"],$result["height"]);
-            echo "BMI" . round($bmisum,1);
-            bmi_judgment(round($bmisum,1));
-        } catch(Exception $e){
-            $bmisum = bmi($result["weight"],$result["height"]);
-            echo "BMI" . round($bmisum,1);
-            bmi_judgment(round($bmisum,1));
-        }
-        echo "<br>";
-        // 適正体重を四捨五入表示
-        echo "適正体重" . Appropriate_weight($result["height"]) . "kg";
-        echo "<br>";
-        // 美容体重
-        echo "美容体重" . beauty_weight($result["height"]) . "kg";
-        echo "<br>";
-        // モデル体重
-        echo "モデル体重" . model_weight($result["height"]) . "kg";
-
-// 基礎代謝(国立健康・栄養研究所の式)
-        echo "<br>";
-        $age = current_age($result["month"],$result["day"],$result["year"]);
-            if($result["sex"] == 0):
-                echo "基礎代謝量" . basicsman($result["weight"],$result["height"],$age) . "kcal/日";
-            elseif($result["sex"] == 1):
-                echo "基礎代謝量" . basicswoman($result["weight"],$result["height"],$age) . "kcal/日";
-            endif;
-
-// 画像表示
-            $stmt=$pdo->prepare("SELECT `img` FROM `img`WHERE `regist_id`=:regist_id");
-            $stmt->bindParam(":regist_id",$result["regist_id"]);
-            $stmt->execute();
-            $img=$stmt->fetch(PDO::FETCH_ASSOC);
-            $stmt = null;
+    endif;
+    $pdo=null;
 ?>
-    <p><img class="myicon" src="<?php echo $img["img"]; ?>" alt="アイコン画像"></p>
-    <?php
-        endif;
-        $pdo=null;
-    ?>
-    <p><a href="edit.php">編集</a></p>
-    <p><a href="edit.php">パスワードの変更</a></p>
-    <p><a href="edit.php">メールアドレスの変更</a></p>
-    <p><a href="img.php">画像変更</a></p>
-    <p><a href="withdrawal.php">退会</a></p>
-<br>
-	<p><a href='logout.php'>ログアウト</a></p>
-<?php else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.html'>ログインページ</a></p>
-<?php endif; ?>
         </main>
 <?php
 // フッター部分呼び出し
-    require_once 'footer.php';
+endif;
+require_once 'footer.php';
 ?>
     </div>
 </body>

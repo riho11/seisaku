@@ -1,18 +1,7 @@
-<!-- 新規登録画面 -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="regist.css">
-    <link rel="shortcut icon" href="img/taiju.png">
-    <title>ゆるゆるdiet｜新規会員登録</title>
-</head>
-<body>
-    <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'nav.php';
+    session_start();
+	session_regenerate_id(true);
+
 //DB呼び出し
     require_once 'db.php';
 
@@ -30,8 +19,6 @@
     elseif(strlen($_POST["namae"]) > 40):
         $errors["namae"] = "ニックネームが長すぎます";
     else:
-        session_start();
-        session_regenerate_id(true);
         $namae = $_POST["namae"];
     endif;
 
@@ -149,7 +136,27 @@
     $pdo = null;
 ?>
 <?php if (count($errors)): ?>
-    <ul>
+
+<!-- 新規登録画面 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="regist.css">
+    <link rel="shortcut icon" href="img/taiju.png">
+    <title>ゆるゆるdiet｜新規会員登録</title>
+</head>
+<body>
+    <div id="wrapper">
+<?php
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+    <ul class="error">
+			<li>
+                <img src="img/goukyu.png" alt="泣く" width="300px">
+			</li>
 <?php foreach($errors as $error): ?>
         <li>
 <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8"); ?>
@@ -158,7 +165,7 @@
         <li><a href="regist.php">登録画面に戻る</a></li>
     </ul>
 <?php else:
-    header("Location: http://".$_SERVER['HTTP_HOST']."/seisaku/schedule.php");
+header("Location: http://".$_SERVER['HTTP_HOST']."/seisaku/schedule.php");
 endif;
 //フッター部分呼び出し
     require_once 'footer.php';

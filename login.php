@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="regist.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <title>ゆるゆるdiet｜ログイン</title>
@@ -27,8 +27,8 @@
                         </tr>
                         <tr>
                             <th><label for="pass"><span class="hissu">必須</span>パスワード</label></th>
-                            <td><input type="password" id="pass" name="pass" placeholder="******" required></td>
-                            <td><span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span></td>
+                            <td><input type="password" id="pass" name="pass" placeholder="******" required>
+                            <div class="annotation"><span id="buttonEye" class="fa fa-eye" onclick="pushHideButton()"></span>
 <!-- パスワード表示、非表示設定 -->
                             <script>
                                 function pushHideButton() {
@@ -42,11 +42,10 @@
                                     btnEye.className = "fa fa-eye-slash";
                                     }
                                 }
-                            </script>
-                            <td>(6～12文字以内)</td>
+                            </script>(6～12文字以内)</div></td>
                         </tr>
-                        <tr>
-                            <td colspan="4"><input class="btn btn-border" type="submit" value="登録"></td>
+                        <tr class="tr-center">
+                            <td colspan="2"><input class="btn-border" type="submit" value="登録"></td>
                         </tr>
                     </table>
                 </form>

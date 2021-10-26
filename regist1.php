@@ -131,16 +131,19 @@
 	if(count($errors)):
 ?>
 
-		<ul>
+		<ul class="error">
+			<li>
+                <img src="img/goukyu.png" alt="泣く" width="300px">
+			</li>
 <?php foreach($errors as $error): ?>
 			<li>
-<?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
+<?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8"); ?>
 			</li>
 <?php endforeach; ?>
-			<li><a href="regist.php">登録画面に戻る</a></li>
+			<li class="sukima"><input class="btn-border" type="button" value="戻る" onclick="history.go(-1)"></li>
 		</ul>
 <?php else: ?>
-        <main>
+        <main class="regist-check">
             <h1><span class="under">新規会員登録確認</span></h1>
             <table class="table-check">
                 <tr>
@@ -189,8 +192,8 @@
                         <td colspan="2">以上で、お間違いないでしょうか？</td>
                     </tr>
                     <tr class="tr-center">
-                        <td><input class="btn btn-border" type="submit" value="登録"></td>
-                        <td><input class="btn btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
+                        <td><input class="btn-border" type="submit" value="登録"></td>
+                        <td><input class="btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
                     </tr>
                 </table>
             </form>

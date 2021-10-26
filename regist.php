@@ -56,8 +56,10 @@
                             <div class="annotation">※診断に必要な項目です。</div></td>
                         </tr>
                         <tr>
-                            <th><label for="birth"><span class="hissu">必須</span>生年月日</label></th>
-                            <td>
+                            <th id="birth"><label for="birth"><span class="hissu">必須</span>生年月日</label></th>
+                        </tr>
+                        <tr>
+                            <td class="birth" colspan="2">
                                 <select id="year" name="year" required>
                                     <option value="" disabled selected style="display:none;">-</option>
                                     <option value="1920">1920</option>
@@ -226,13 +228,12 @@
                             <td><input type="text" id="weight" name="weight"  placeholder="50" required> kg</td>
                         </tr>
                         <tr class="tr-center">
-                            <td colspan="2"><input class="btn btn-border" type="submit" value="登録"></td>
+                            <td colspan="2"><input class="btn-border" type="submit" value="登録"></td>
                         </tr>
                     </table>
                 </form>
             </div>
         </main>
-            
 <!-- フッター部分呼び出し -->
 <?php
     require_once 'footer.php';

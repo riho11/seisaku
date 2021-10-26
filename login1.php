@@ -1,18 +1,7 @@
-<!-- ログイン画面 -->
-<!DOCTYPE html>
-<html lang="ja">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="login.css">
-    <link rel="shortcut icon" href="img/taiju.png">
-    <title>ゆるゆるdiet｜ログイン</title>
-</head>
-<body>
-    <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'nav.php';
+session_start();
+session_regenerate_id(true);
+
 //DB呼び出し
     require_once 'db.php';
 
@@ -28,8 +17,6 @@
     $stmt = null;
     if($result):
         if(password_verify($_POST["pass"],$result["pass"])):
-                session_start();
-                session_regenerate_id(true);
                 $_SESSION['email']=$_POST["email"];
                 $_SESSION['pass']=$_POST["pass"];
                 $_SESSION["namae"] = $result["namae"];
@@ -41,7 +28,7 @@
                 $img=$stmt->fetch(PDO::FETCH_ASSOC);
                 $stmt = null;
                 $_SESSION["img"] = $img["img"];
-                header("Location: http://".$_SERVER['HTTP_HOST']."/seisaku/login2.php");
+                header("Location: http://".$_SERVER['HTTP_HOST']."/seisaku/mypage.php");
         else:
             $errors = "パスワードが違います";
         endif;
@@ -51,8 +38,27 @@
     $stmt = null;
     if(isset($errors)):
 ?>
+<!-- ログイン画面 -->
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="stylesheet" href="regist.css">
+    <link rel="shortcut icon" href="img/taiju.png">
+    <title>ゆるゆるdiet｜ログイン</title>
+</head>
+<body>
+    <div id="wrapper">
+<?php
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<div  class="error">
+    <p><img src="img/goukyu.png" alt="泣く" width="300px"></p>
     <p><?php echo $errors; ?></p>
-    <p><a href="login.php">ログイン画面に戻る</a></p>
+    <p class="sukima"><input class="btn-border" type="button" value="戻る" onclick="history.go(-1)"></p>
+    </div>
 <?php
     endif;
     $pdo = null;

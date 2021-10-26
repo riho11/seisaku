@@ -17,10 +17,14 @@
 <!-- アイコンを非表示 -->
 <style>.firsticon{ display:none;}</style>
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
 //DB呼び出し
     require_once 'db.php';
+
+// Warningエラーもcatchする
+    function error_handler($severity, $message, $filename, $lineno) {
+    throw new ErrorException($message, 0, $severity, $filename, $lineno);
+    }
+    set_error_handler('error_handler');
 
 try { //既に画像が書き込まれた場合、プライマリーキーのためエラーが出るが例外処理をさせる
 // SQL取得(registを取得)、画像を自動で保存
@@ -48,8 +52,23 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
 } catch(Exception $e) {
     // 何も表示しない
     }
-    if(isset($_SESSION["email"])):
-?>
+    if(!isset($_SESSION["email"])):
+        
+//ナビ部分呼び出し
+    require_once 'nav.php';
+ ?>
+    <style>.error-name{ display:none;}</style>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';?>
+
 <main>
     <p>目標を設定しましょう。</p>
     <div id="form">
@@ -59,11 +78,13 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
             <table class="form-table">
                 <tr>
                     <th><label for="goal_weight"><span class="hissu">必須</span>目標体重</label></th>
-                    <td><input type="text" id="goal_weight" name="goal_weight" placeholder="50" required> kg</td>
+                    <td class="goal_weight"><input type="text" id="goal_weight" name="goal_weight" placeholder="50" required> kg</td>
                 </tr>
                 <tr>
-                    <th><label for="goal_period"><span class="hissu">必須</span>目標期間</label></th>
-                    <td>
+                    <th id="goal_period"><label for="goal_period"><span class="hissu">必須</span>目標期間</label></th>
+                </tr>
+                <tr>
+                    <td class="goal_period" colspan="2">
                         <select id="goal_year" name="goal_year" required>
                             <option value="" disabled selected style="display:none;">-</option>
                             <option value="2021">2021</option>
@@ -134,20 +155,16 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
                     <td><input type="text" id="goal_bodyfat" name="goal_bodyfat" placeholder="20"> %</td>
                 </tr>
                 <tr class="tr-center">
-                    <td colspan="2"><input class="btn btn-border" type="submit" value="登録"></td>
+                    <td colspan="2"><input class="btn-border" type="submit" value="登録"></td>
                 </tr>
             </table>
         </form>
     </div>
 </main>
-<p><a href='logout.php'>ログアウト</a></p>
 
-<?php else: ?>
-<p>ログインしなおしてください</p>
-<p><a href='login.html'>ログインページ</a></p>
-<?php endif; ?>
 <!-- フッター部分呼び出し -->
 <?php
+endif;
 require_once 'footer.php';
 ?>
 </div>

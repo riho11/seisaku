@@ -40,7 +40,7 @@ function weight_difference($record,$gole){
     if($record <= $gole):
         echo "達成しました！";
     else:
-        echo "目標まで残り　" . $record - $gole . "kg";
+        echo $record - $gole . "kg";
     endif;
 }
 
@@ -49,7 +49,7 @@ function bodyfat_difference($record,$gole){
     if($record <= $gole):
         echo "達成しました！";
     else:
-        echo "目標まで残り　" . $record - $gole . "%";
+        echo $record - $gole . "%";
     endif;
 }
 
