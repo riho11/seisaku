@@ -223,6 +223,7 @@ nav #list{
 
 .cp_navi > ul > li:hover > div {
     visibility: visible;
+	z-index: 100;
 }
 
 .cp_navi > ul > li > div ul{

@@ -15,16 +15,24 @@
 <body>
     <div id="wrapper">
 <!-- アイコンを非表示 -->
-<style>.firsticon{ display:none;}</style>
+<style>.firsticon{ display:none;}.error-name{padding-right: 50px};</style>
 <?php
 //DB呼び出し
     require_once 'db.php';
 
-// Warningエラーもcatchする
-    function error_handler($severity, $message, $filename, $lineno) {
-    throw new ErrorException($message, 0, $severity, $filename, $lineno);
-    }
-    set_error_handler('error_handler');
+    if(!isset($_SESSION["email"])):
+        
+//ナビ部分呼び出し
+    require_once 'nav.php';
+ ?>
+    <style>.error-name{ display:none;}</style>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
 
 try { //既に画像が書き込まれた場合、プライマリーキーのためエラーが出るが例外処理をさせる
 // SQL取得(registを取得)、画像を自動で保存
@@ -46,25 +54,11 @@ try { //既に画像が書き込まれた場合、プライマリーキーのた
             $stmt->bindParam(':img',$img);
             $stmt->bindParam(':regist_id',$result["id"]);
             $stmt->execute();
-            echo "<p>登録完了！</p>";
         endif;
     endif;
 } catch(Exception $e) {
     // 何も表示しない
     }
-    if(!isset($_SESSION["email"])):
-        
-//ナビ部分呼び出し
-    require_once 'nav.php';
- ?>
-    <style>.error-name{ display:none;}</style>
-<div class="error">
-    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
-    <p>通信に失敗しました</p>
-    <p>ログインしなおしてください</p>
-    <p><a href='login.php'>ログインページ</a></p>
-</div>
-<?php else: 
     
 //ナビ部分呼び出し
 require_once 'loginnav.php';?>

@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="weight.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <title>ゆるゆるdiet｜体重記録</title>
@@ -16,13 +16,25 @@
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
 //DB呼び出し
     require_once 'db.php';
-
-    if(isset($_SESSION["email"])):
+    
+    if(!isset($_SESSION["email"])):
+    
+//ナビ部分呼び出し
+    require_once 'nav.php';
 ?>
+    <style>.error-name{ display:none;}</style>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';?>
     <main>
         <div id="form">
 <!-- 記録フォーム -->
@@ -34,11 +46,11 @@
                         <td><input type="text" id="record_weight" name="record_weight" placeholder="50" required> kg</td>
                     </tr>
                     <tr>
-                        <th><label for="record_bodyfat">体脂肪</label></th>
+                        <th class="bodyfat"><label for="record_bodyfat">体脂肪</label></th>
                         <td><input type="text" id="record_bodyfat" name="record_bodyfat"  placeholder="20" > %</td>
                     </tr>
-                    <tr>
-                        <td colspan="3"><input class="btn btn-border" type="submit" value="登録"></td>
+                    <tr class="tr-center">
+                        <td colspan="2"><input class="btn-border" type="submit" value="登録"></td>
                     </tr>
                 </table>
             </form>
@@ -101,7 +113,10 @@
 ?>
 
 <?php if (count($errors)): ?>
-    <ul>
+		<ul class="error">
+			<li>
+          <img src="img/goukyu.png" alt="泣く" width="300px">
+			</li>
 <?php foreach($errors as $error): ?>
         <li>
 <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8"); ?>
@@ -362,14 +377,10 @@ endforeach;
   </script>
 
 <?php endif; ?>
-
-<?php else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.php'>ログインページ</a></p>
-<?php endif; ?>
         </main>
 <!-- フッター部分呼び出し -->
 <?php
+endif; 
     require_once 'footer.php';
     $pdo = null;
 ?>

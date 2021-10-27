@@ -15,16 +15,28 @@
 <body>
     <div id="wrapper">
 <!-- アイコンを非表示 -->
-<style>.firsticon{ display:none;}</style>
+<style>.firsticon{ display:none;}.error-name{padding-right: 50px};</style>
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
 //DB呼び出し
     require_once 'db.php';
     
     $errors = array();
+    if(!isset($_SESSION["email"])):
+    
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+    <style>.error-name{ display:none;}</style>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
 
-    if(isset($_SESSION["email"])):
+//ナビ部分呼び出し
+require_once 'loginnav.php';
 
 // ↓登録情報↓
     $goal_weight = null;
@@ -114,7 +126,11 @@
                 $stmt->execute();
                 $stmt = null;
             else: ?>
+            <div class="count">
+                <p><img src="img/yorokobi-hiyoko.gif" alt="踊る" width="300px"></p>
                 <p>既に目標は設定されています</p> 
+                <p><a href="mypage.php">マイページへ</a></p>
+            </div>
                 <style>.goal{ display: none; }</style><!-- 登録完了を非表示 -->
 <?php       endif;
         endif;
@@ -122,7 +138,10 @@
     $pdo = null;
 ?>
 <?php if (count($errors)): ?>
-    <ul>
+    <ul class="error">
+        <li>
+            <img src="img/goukyu.png" alt="泣く" width="300px">
+        </li>
 <?php foreach($errors as $error): ?>
         <li>
 <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
@@ -131,15 +150,15 @@
         <li><a href="schedule.php">目標画面に戻る</a></li>
     </ul>
 <?php else:?>
-    <p class="goal">登録完了しました</p>
-    <p><a href="mypage.php">マイページへ</a></p>
-<?php endif; ?>
-<?php else: ?>
-<p>ログインしなおしてください</p>
-<p><a href='login.html'>ログインページ</a></p>
+    <div class="goal">
+        <img src="img/tanosimi-hiyoko.png" alt="よろこぶ" width="300px">
+        <p>登録完了しました</p>
+        <p><a href="mypage.php">マイページへ</a></p>
+    </div>
 <?php endif; ?>
 <!-- フッター部分呼び出し -->
 <?php
+endif;
 require_once 'footer.php';
 ?>
 </div>

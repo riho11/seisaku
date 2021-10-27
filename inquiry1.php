@@ -20,7 +20,7 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="inquiry.css">
+    <link rel="stylesheet" href="regist.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜お問い合わせ</title>
 </head>
@@ -118,8 +118,8 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
                         </tr>
                         <tr class="tr-center">
 			                <input type="hidden" name="token" value=<?php echo $_POST['token']; ?>>
-                            <td><input class="btn btn-border" type="submit" value="登録"></td>
-                            <td><input class="btn btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
+                            <td><input class="btn-border" type="submit" value="登録"></td>
+                            <td><input class="btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
                         </tr>
                     </table>
                 </form>

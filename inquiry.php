@@ -14,20 +14,28 @@ header('X-FRAME-OPTIONS: SAMEORIGIN');
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="inquiry.css">
+    <link rel="stylesheet" href="regist.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜お問い合わせ</title>
 </head>
 <body>
     <div id="wrapper">
 <?php
+    if(!isset($_SESSION["email"])):
+    
 //ナビ部分呼び出し
-    require_once 'loginnav.php';
-//DB呼び出し
-    require_once 'db.php';
-
-    if(isset($_SESSION["email"])):
+    require_once 'nav.php';
 ?>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';?>
     <main>
         <div id="form">
             <h1><span class="under">お問い合わせフォーム</span></h1>
@@ -46,24 +54,20 @@ header('X-FRAME-OPTIONS: SAMEORIGIN');
                         <td><input id="tel" name="tel" type="tel" size="40" placeholder="080-1234-5678"></td>
                     </tr>
                     <tr>
-                        <th><span class="hissu">必須</span>お問い合わせ内容</th>
+                        <th class="comment"><span class="hissu">必須</span>お問い合わせ内容</th>
                         <td><textarea name="comment" id="comment" cols="45" rows="4" placeholder="お問い合わせ内容を入力してください。" required></textarea></td>
                     </tr>
-                    <tr>
+                    <tr class="tr-center">
 			            <input type="hidden" name="token" value="<?php echo $_SESSION['token'] ?>">
-                        <td colspan="2"><input class="btn btn-border" type="submit" value="送信"></td>
+                        <td colspan="2"><input class="btn-border" type="submit" value="送信"></td>
                     </tr>
                 </table>
             </form>
         </div>
-
-<?php else: ?>
-<p>ログインしなおしてください</p>
-<p><a href='login.php'>ログインページ</a></p>
-<?php endif; ?>
-        </main>
+    </main>
 <!-- フッター部分呼び出し -->
 <?php
+endif;
     require_once 'footer.php';
     $pdo = null;
 ?>

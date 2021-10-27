@@ -151,6 +151,14 @@ table{
     text-align: center;
     padding: 30px;
 }
+.count{
+    padding: 50px;
+    text-align: center;
+}
+.goal{
+    padding: 50px;
+    text-align: center;
+}
 
 /* スマホサイズ */
 @media screen and (min-width:0px) and (max-width:599px){
@@ -179,11 +187,11 @@ table{
         width: 100%;
     }
     
-    #height,#weight{
+    #goal_weight,#bodyfat,#goal_bodyfat{
         width: 50%;
     }
     
-    #year,#month,#day{
+    #goal_year,#goal_month,#goal_day{
         width: 20%;
     }
     }

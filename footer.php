@@ -37,6 +37,13 @@ a{
 .img_footer{
     text-align: right;
 }
+
+
+@media screen and (min-width:0px) and (max-width:1024px){
+.copyright{
+    font-size: 15px;
+} 
+}
 </style>
 
 <!-- html記載 -->

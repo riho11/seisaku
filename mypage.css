@@ -146,7 +146,7 @@ border-bottom: solid 3px #d7d7d7;
 .record-table th{
     background: #e9727e;
     color: #fff;
-    padding: 10px 100px;
+    height: 50px;
 }
 .record-table td{
     text-align: center;

@@ -49,7 +49,6 @@ table {
 	border-spacing: 0;
 }
 
-
 /* ↓フォント指定↓ */
 @font-face {
     font-family: 'APJapanesefont'; 
@@ -60,7 +59,7 @@ table {
 
 html{
     font-family: 'APJapanesefont'; 
-    font-size:130%;
+    font-size:120%;
 }
 
 #wrapper{
@@ -68,13 +67,15 @@ html{
     margin: 0 auto;
 }
 
+main{
+    width: 60%;
+    margin: 0 auto;
+    text-align: center;
+}
+
 th{
     font-weight: bolder;
     font-size: 110%;
-}
-.annotation{
-    line-height: 30px;
-    font-size: 90%;
 }
 
 /* フォーム項目設定 */
@@ -123,169 +124,61 @@ table{
     border-collapse: collapse;
     margin: 20px auto 50px;
 }
-   
+    
 .form-table {
     width: 100%;
 }
 /* テキストの枠線 */
-#namae,#email,#pass,#year,#month,#day,#height,#weight, #comment, #tel{
-    width: 100%;
+#record_weight,#record_bodyfat{
+    width: 50%;
     padding: 5px;
     border-radius: 4px;
     border: none;
     box-shadow: 0 0 0 1px #ccc;
 }
+
 /* テキストを選択した時の色 */
-#namae:focus,#email:focus,#pass:focus,#year:focus,#month:focus,#day:focus,#height:focus,#weight:focus, #comment:focus,#tel:focus{
+#record_weight:focus,#record_bodyfat:focus{
     outline: 0;
     box-shadow: 0 0 0 2px rgb(33, 150, 243) ;
 }
-/* サンプル文字の色 */
+  /* サンプル文字の色 */
 ::placeholder{
     color: rgb(192, 190, 190);
 }
 
-#pass {
-    border: none; /* デフォルトの枠線を消す */
-  }
-
-  
-/* regist1.phpのページcss */
-.table-check {
-    border-collapse: collapse;
-    border: solid 2px rgb(0, 0, 0);
-  }
-.table-check td {
-    border: dashed 1px rgb(0, 0, 0);
-    padding: 20px;
-  }
-
-  .table-check th {
-    border: dashed 1px rgb(0, 0, 0);
-    background-color: #ffdbedc5;
-    padding: 20px;
-    text-align: left;
-  }
- .error{
-     text-align: center;
- }
-
- .sukima{
-     padding: 20px 0;
- }
- .regist-check{
-     width: 70%;
- }
-/* ↑regist1.phpのページcss↑ */
-
-/* スマホサイズ */
-@media screen and (min-width:0px) and (max-width:599px){
-.form-table td {
-    display: block;
-    box-sizing: border-box;
-    width:100%;
-    border-top: 2px solid #d7d7d7;
-    padding: 20px;
-    margin: auto;
+.error{
+    text-align: center;
 }
 
-.form-table th {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    border-top: 2px solid #d7d7d7;
-    padding: 20px;
-    background: #ffecea;
-    position: relative;
-    text-align: left;
-}
-
-main{
-    width: 100%;
-}
-
-#height,#weight{
-    width: 50%;
-}
-
-#year,#month,#day{
-    width: 20%;
-}
-}
-/* タブレットサイズ */
-@media screen and (min-width:600px) and (max-width:1024px){
-.form-table td {
-    display: block;
-    box-sizing: border-box;
-    width:100%;
-    border-top: 2px solid #d7d7d7;
-    padding: 20px;
-
-}
-
-.form-table th {
-    display: block;
-    box-sizing: border-box;
-    width: 100%;
-    border-top: 2px solid #d7d7d7;
-    padding: 20px;
-    background: #ffecea;
-    position: relative;
-    text-align: left;
-}
-
-main{
-    width: 100%;
-}
-
-#height,#weight{
-    width: 50%;
-}
-
-#year,#month,#day{
-    width: 20%;
-}
-}
 /* PCサイズ */
 @media screen and (min-width:1025px){
-#wrapper{
-    flex-wrap:wrap;
-    max-width:2000px;
-    margin:0 auto;
-}
+    #wrapper{
+        flex-wrap:wrap;
+        max-width:2000px;
+        margin:0 auto;
+    }
+    
+    main{
+        margin: 0 auto;
+    }
+    .form-table{
+        width: 350px;
+    }
+    
+    .form-table td {
+        padding: 20px;
+    }
+    
+    .form-table th {
+        padding: 20px;
+        vertical-align: top;
+        text-align: left;
+        width: 100px;
+    }
 
-main{
-    width: 50%;
-    margin: 0 auto;
+    .form-table .bodyfat{
+        text-align: right;
+    }
 }
-
-.form-table td {
-    padding: 20px;
-}
-
-.form-table th {
-    padding: 20px;
-    vertical-align: top;
-    text-align: left;
-    width: 200px;
-}
-
-#height,#weight{
-    width: 50%;
-}
-
-#year,#month,#day{
-    width: 15%;
-}
-
-.form-table .birth{
-    text-align: right;
-    padding-top: 0;
-}
-.form-table #birth{
-    padding-bottom: 0;
-}
-.form-table .comment{
-    width: 250px;
-}
-}
+    

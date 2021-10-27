@@ -292,7 +292,7 @@
                         </td>
                     </tr>
                     <tr class="tr-center">
-                        <td colspan="3"><input class="btn btn-border" type="submit" value="登録"></td>
+                        <td colspan="3"><input class="btn-border" type="submit" value="登録"></td>
                     </tr>
                 </table>
             </form>
