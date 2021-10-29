@@ -130,23 +130,28 @@ require_once 'loginnav.php';?>
 ?>
 
 
-<?php // 日々の体重を取得
-    $stmt=$pdo -> prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY `date` ASC");
-    $stmt->bindParam(':regist_id',$_SESSION["id"]);
-    $stmt->execute();
-    $response=$stmt->fetchall(PDO::FETCH_ASSOC);
-    $stmt = null;
+<?php 
+// 日々の体重を取得
+  $stmt=$pdo -> prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY `date` ASC");
+  $stmt->bindParam(':regist_id',$_SESSION["id"]);
+  $stmt->execute();
+  $response=$stmt->fetchall(PDO::FETCH_ASSOC);
+  $stmt = null;
+// 初期の体重、体脂肪
+  $sql = "SELECT `weight`,`bodyfat` FROM `regist` INNER JOIN `schedule` ON regist . id = schedule . regist_id  WHERE `email`=:email";
+  $stmt=$pdo->prepare($sql);
+  $stmt->bindParam(":email",$_SESSION["email"]);
+  $stmt->execute();
+  $initial_value=$stmt->fetch(PDO::FETCH_ASSOC);
+  $stmt = null;
 ?>
-
 
 <!-- 押したら表示されるボタン-->
 <form action="weight.php" method="POST">
     <button name="week" value="一週間">一週間</button>
     <button name="month" value="一カ月">一カ月</button>
-    <button name="year" value="一年">一年</button>
 </form>
-<p>※記録した日のみが表示されます</p>
-<p>未登録は０になります</p>
+<p>※初期値は登録した場合のみ表示されます</p>
 
 
 <!-- 折れ線グラフ -->
@@ -164,24 +169,81 @@ require_once 'loginnav.php';?>
     data: {
       // x軸の各メモリ 
       labels: [<?php 
+echo "'" ."初期体重" ."'". ',';
+// 1週間分の日付取得
 $week_past = date("Y-m-d",strtotime("-6 day"));
-foreach($response as $array):
-  if($week_past <= $array["date"]):
-    $str = explode("-",$array["date"]);
-    echo $str[2]. ',';
-  endif;
-endforeach;
+$week_last = date("Y-m-d",strtotime("last day of previous month")); //先月の末尾取得
+$str_past = explode("-",$week_past);
+$str_last = explode("-",$week_last);
+if(date("d") > $str_past[2]):
+// 今日の日付より１週間前の日付が小さい場合(月をまたがない場合)
+  for($i = $str_past[2]; $i <= date("d"); $i++){
+    echo "'" .$i ."'". ',';
+  }
+else:
+// 今日の日付より１週間前の日付が大きい場合(月をまたぐ場合)
+  for($i = $str_past[2]; $i <= $str_last[2]; $i++){
+    echo "'" .$i ."'". ',';
+  }
+  for($i = 1; $i <= date("d"); $i++){
+    echo "'" .$i ."'". ',';
+  }
+endif;
 ?>],
       datasets: [
         {
           label: '体重',
           spanGaps: true, // 欠損値を補完
-          data: [<?php
+          data: [<?php 
+// 初期値
+echo $initial_value["weight"] . ',';
+// １週間以内にDBにある日付を取得
+$exist_date=Array();
 $week_past = date("Y-m-d",strtotime("-6 day"));
 foreach($response as $array):
   if($week_past <= $array["date"]):
-    echo $array["record_weight"] . ',';
+    array_push($exist_date,$array["date"]);
   endif;
+endforeach;
+// 現在から１週間分の日付を取得
+$every_date = Array();
+$week_past = date("Y-m-d",strtotime("-6 day"));
+$week_last = date("Y-m-d",strtotime("last day of previous month")); //先月の末尾取得
+$str_past = explode("-",$week_past);
+$str_last = explode("-",$week_last);
+$Ym = date("Y-m-");
+  if(date("d") > $str_past[2]):
+    for($i = $str_past[2]; $i <= date("d"); $i++){
+      array_push($every_date,$Ym .$i);
+    }
+  else:
+    for($i = $str_past[2]; $i <= $str_last[2]; $i++){
+      array_push($every_date,$Ym .$i);
+    }
+    for($i = 1; $i <= date("d"); $i++){
+      array_push($every_date,$Ym .$i);
+    }
+  endif;
+// DBに存在しない日を取得、配列の最後にNULLを追加
+$diff=array_diff($every_date, $exist_date);
+$null=Array();
+foreach($diff as $dif):
+  array_push($null,$dif."-"."'"."NULL"."'");
+endforeach;
+// DBに存在する日を取得、配列の最後に体重を追加
+$exist=Array();
+$week_past = date("Y-m-d",strtotime("-6 day"));
+foreach($response as $array):
+if($week_past <= $array["date"]):
+  array_push($exist,$array["date"] . '-'.$array["record_weight"]);
+endif;
+endforeach;
+// 一つの配列に入れ、若い日付に直す。体重の値のみ取り出す。
+$merge=array_merge($exist,$null);
+sort($merge);
+foreach($merge as $me):
+  $str_weight = explode("-",$me);
+  echo $str_weight[3]. ',';
 endforeach;
 ?>],
           lineTension: 0,
@@ -191,14 +253,23 @@ endforeach;
         {
           label: '体脂肪',
           spanGaps: true, // 欠損値を補完
-          data: [ // 体脂肪取得
-<?php
+          data: [<?php 
+echo $initial_value["bodyfat"] . ',';
+// DBに存在する日を取得、配列の最後に体脂肪を追加
+$exist=Array();
 $week_past = date("Y-m-d",strtotime("-6 day"));
 foreach($response as $array):
-  if($week_past <= $array["date"]):
-    echo $array["record_bodyfat"] . ',';
-  endif;
-endforeach; 
+if($week_past <= $array["date"]):
+  array_push($exist,$array["date"] . '-'.$array["record_bodyfat"]);
+endif;
+endforeach;
+// 一つの配列に入れ、若い日付に直す。体脂肪の値のみ取り出す。
+$merge=array_merge($exist,$null);
+sort($merge);
+foreach($merge as $me):
+  $str_weight = explode("-",$me);
+  echo $str_weight[3]. ',';
+endforeach;
 ?>],
           lineTension: 0,
           borderColor: "#2260ea",
@@ -235,27 +306,71 @@ endforeach;
     // グラフの種類：折れ線グラフを指定
     type: 'line',
     data: {
-      labels: [ // 日にち取得
-<?php 
-$month_past = date("Y-m-d",strtotime("-1 month"));
-foreach($response as $array):
-  if($month_past < $array["date"]):
-    $str_date = explode("-",$array["date"]);
-    echo $str_date[1].".".$str_date[2]. ',';
-  endif;
-endforeach;
-?>],
+      labels: [<?php 
+echo "'" ."初期体重" ."'". ',';
+// １カ月分の日付取得
+$month_past = date("Y-n-d",strtotime("-1 month"));
+$month_last = date("Y-n-d",strtotime("last day of previous month")); //先月の末尾取得
+$str_past = explode("-",$month_past);
+$str_last = explode("-",$month_last);
+$now_month = date("n");
+// 今日の日付より１カ月前の日付が大きい場合(月をまたぐ場合)
+  for($i = $str_past[2]; $i <= $str_last[2]; $i++){
+    echo "'" .$str_last[1].".".$i ."'". ',';
+  }
+  for($i = 1; $i <= date("d"); $i++){
+    echo "'" .$now_month.".".$i ."'". ',';
+  }?>],
       datasets: [
         {
           label: '体重',
           spanGaps: true, // 欠損値を補完
-          data: [ // 体重取り出し
-<?php
+          data: [ <?php 
+// 初期値
+echo $initial_value["weight"] . ',';
+// １カ月以内にDBにある日付を取得
+$exist_month=Array();
 $month_past = date("Y-m-d",strtotime("-1 month"));
 foreach($response as $array):
-  if($month_past < $array["date"]):
-    echo $array["record_weight"] . ',';
+  if($month_past <= $array["date"]):
+    array_push($exist_month,$array["date"]);
   endif;
+endforeach;
+// １カ月分の日付取得
+$every_month = Array();
+$month_past = date("Y-m-d",strtotime("-1 month"));
+$month_last = date("Y-m-d",strtotime("last day of previous month")); //先月の末尾取得
+$str_past = explode("-",$month_past);
+$str_last = explode("-",$month_last);
+$Ym = date("Y-m-");
+$Ym_lastmonth = date("Y-") . $str_last[1] ."-";
+// 今日の日付より１カ月前の日付が大きい場合(月をまたぐ場合)
+  for($i = $str_past[2]; $i <= $str_last[2]; $i++){
+    array_push($every_month,$Ym_lastmonth.$i);
+  }
+  for($i = 01; $i <= date("d"); $i++){
+    $sprintf = sprintf("%02d",$i);
+    array_push($every_month,$Ym.$sprintf);
+  }
+// DBに存在しない日を取得、配列の最後にNULLを追加
+$diff=array_diff($every_month, $exist_month);
+$null=Array();
+foreach($diff as $dif):
+  array_push($null,$dif."-"."'"."NULL"."'");
+endforeach;
+// DBに存在する日を取得、配列の最後に体重を追加
+$exist=Array();
+foreach($response as $array):
+if($month_past <= $array["date"]):
+  array_push($exist,$array["date"] . '-'.$array["record_weight"]);
+endif;
+endforeach;
+// 一つの配列に入れ、若い日付に直す。体重の値のみ取り出す。
+$merge=array_merge($exist,$null);
+sort($merge);
+foreach($merge as $me):
+  $str_weight = explode("-",$me);
+  echo $str_weight[3]. ',';
 endforeach;
 ?>],
           lineTension: 0,
@@ -265,88 +380,22 @@ endforeach;
         {
           label: '体脂肪',
           spanGaps: true, // 欠損値を補完
-          data: [ // 体脂肪取得(NULLの時０を代入)
-<?php
-$month_past = date("Y-m-d",strtotime("-1 month"));
+          data: [ <?php 
+// 初期値
+echo $initial_value["bodyfat"] . ',';
+// DBに存在する日を取得、配列の最後に体脂肪を追加
+$exist=Array();
 foreach($response as $array):
-  if($month_past < $array["date"]):
-    echo $array["record_bodyfat"] . ',';
-  endif;
-endforeach; 
-?>],
-          lineTension: 0,
-          borderColor: "#2260ea",
-          backgroundColor: "#00000000"
-        }
-      ],
-    },
-    options: {
-      title: {
-        display: true,
-        text: '体重グラフ'
-      },
-      scales: {
-        yAxes: [{
-          ticks: {
-            suggestedMax: 100,
-            suggestedMin: 0,
-            stepSize: 10,  // 縦メモリのステップ数
-            callback: function(value, index, values){
-              return  value +  'kg'  // 各メモリのステップごとの表記（valueは各ステップの値）
-            }
-          }
-        }]
-      },
-    }
-  });
-  </script>
-
-<!-- 一年表示 -->
-<?php elseif(isset($_POST["year"])): ?>
-  <script>
-  var ctx = document.getElementById("chart");
-  var myLineChart = new Chart(ctx, {
-    // グラフの種類：折れ線グラフを指定
-    type: 'line',
-    data: {
-      // x軸の各メモリ 
-      labels: [ // 日にち取得
-<?php 
-  $year_past = date("Y-m-d",strtotime("-1 year"));
-  foreach($response as $array):
-    if($year_past < $array["date"]):
-      $str_date = explode("-",$array["date"]);
-      echo $str_date[1].".".$str_date[2]. ',';
-    endif;
-  endforeach;
-?>],
-      datasets: [
-        {
-          label: '体重',
-          spanGaps: true, // 欠損値を補完        
-          data: [ // 体重取り出し
-<?php
-$year_past = date("Y-m-d",strtotime("-1 year"));
-foreach($response as $array):
-  if($year_past < $array["date"]):
-    echo $array["record_weight"] . ',';
-  endif;
+if($month_past <= $array["date"]):
+  array_push($exist,$array["date"] . '-'.$array["record_bodyfat"]);
+endif;
 endforeach;
-?>],
-          lineTension: 0,
-          borderColor: "#ec4343",
-          backgroundColor: "#00000000"
-        },
-        {
-          label: '体脂肪',
-          spanGaps: true, // 欠損値を補完   
-          data: [ // 体脂肪取得
-<?php
-$year_past = date("Y-m-d",strtotime("-1 year"));
-foreach($response as $array):
-  if($year_past < $array["date"]):
-    echo $array["record_bodyfat"] . ',';
-  endif;
+// 一つの配列に入れ、若い日付に直す。体脂肪の値のみ取り出す。
+$merge=array_merge($exist,$null);
+sort($merge);
+foreach($merge as $me):
+  $str_weight = explode("-",$me);
+  echo $str_weight[3]. ',';
 endforeach;
 ?>],
           lineTension: 0,
