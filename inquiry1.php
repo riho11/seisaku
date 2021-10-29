@@ -75,9 +75,11 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
     endif;
 
     if(count($errors)):
-    ?>
-
-            <ul>
+    ?> 
+		<ul class="error">
+			<li>
+                <img src="img/goukyu.png" alt="泣く" width="300px">
+			</li>
     <?php foreach($errors as $error): ?>
                 <li>
     <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>

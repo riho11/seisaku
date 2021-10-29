@@ -7,21 +7,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="img.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜アイコン変更</title>
 </head>
 <body>
     <div id="wrapper">
 <?php
-// ナビ部分呼び出し
-    require_once 'loginnav.php';
 // DB呼び出し
     require_once 'db.php';
 
-    $errors = array();
+    if(!isset($_SESSION["email"])):
     
-    if(isset($_SESSION["email"])):
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<main>
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</main>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';
+$errors = array();
+
 // SQL(フォルダ名につけるidの取得)
         $stmt=$pdo->prepare("SELECT `id` FROM `regist` WHERE `email`=:email");
         $stmt->bindParam(":email",$_SESSION["email"]);
@@ -44,7 +56,10 @@
         $_SESSION['imgname'] = $filename;
 ?>  
     <?php if (count($errors)): ?>
-        <ul>
+		<ul class="error">
+			<li>
+                <img src="img/goukyu.png" alt="泣く" width="300px">
+			</li>
     <?php foreach($errors as $error): ?>
             <li>
     <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
@@ -53,15 +68,19 @@
             <li><a href="mypage.php">マイページに戻る</a></li>
         </ul>
         <?php else:?>
-        <p><img src="<?php echo $filename; ?>" alt="送信画像"></p>
-        <form action="img2.php" enctype="multipart/form-data" method="post">
-            <input type="hidden" name="created_at" value="<?php echo $date; ?>">
-            <input type="hidden" name="img" value="<?php echo $filename; ?>">
-            <input type="submit" name="register" value="登録">
-        </form>
-        <form action="img.php" method="post">
-            <input type="submit" name="back" value="キャンセル">
-        </form> 
+        <main>
+            <p>この画像で間違いないですか？</p>
+            <p><img src="<?php echo $filename; ?>" alt="送信画像"  width="300px"></p>
+            <form action="img2.php" enctype="multipart/form-data" method="post">
+                <input type="hidden" name="created_at" value="<?php echo $date; ?>">
+                <input type="hidden" name="img" value="<?php echo $filename; ?>">
+                <input type="submit" name="register" value="変更">
+            </form>
+            <br>
+            <form action="img.php" method="post">
+                <input type="submit" name="back" value="やっぱり、やめる">
+            </form> 
+        </main>
         
 <script>// メニューバーを押した場合の注意メッセージ
 const arr = document.getElementsByTagName("a");
@@ -72,14 +91,11 @@ const arr = document.getElementsByTagName("a");
 </script>
 
     <?php endif; ?>
-<?php else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.html'>ログインページ</a></p>
-<?php endif; ?>
-        </main>
+</main>
 <?php
 // フッター部分呼び出し
-    require_once 'footer.php';
+endif;
+require_once 'footer.php';
 ?>
     </div>
 </body>

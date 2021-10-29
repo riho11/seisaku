@@ -8,8 +8,12 @@ header{
 }
 .icon{
     border-radius:50%;
-    width:100px;
+    width:  60px;
+    height: 60px;
 	margin-right: 40px;
+}
+.firsticon{
+	margin-top: auto;
 }
 .error-name{
   margin-top: auto;

@@ -24,7 +24,6 @@
 //ナビ部分呼び出し
     require_once 'nav.php';
 ?>
-    <style>.error-name{ display:none;}</style>
 <div class="error">
     <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
     <p>通信に失敗しました</p>
@@ -35,6 +34,40 @@
     
 //ナビ部分呼び出し
 require_once 'loginnav.php';?>
+
+<main>
+<?php
+// Warningエラーもcatchする
+function error_handler($severity, $message, $filename, $lineno) {
+throw new ErrorException($message, 0, $severity, $filename, $lineno);
+}
+set_error_handler('error_handler');
+try { // 目標設定がされていない場合、例外処理で目標設定画面へ
+// SQL実行(scheduleとregistを選択)
+      $sql = "SELECT * FROM `regist` INNER JOIN `schedule` ON regist . id = schedule . regist_id  WHERE `email`=:email";
+      $stmt=$pdo->prepare($sql);
+      $stmt->bindParam(":email",$_SESSION["email"]);
+      $stmt->execute();
+      $result=$stmt->fetch(PDO::FETCH_ASSOC);
+      $stmt = null;
+      if($result["regist_id"] === $result["id"]):
+          // 目標未設定の場合、Warningエラーを発生させる
+      endif;
+  } catch(Exception $e) {?>
+  <!-- アイコンを非表示 -->
+    <style>.firsticon{ display:none;}.error-name{padding-right: 50px;}main{padding: 50px;}</style>
+    <img src="img/tumi-piyo.png" alt="泣く" width="300px"><br><?php
+      echo "目標が設定されていません<br>";
+      echo "目標を設定しましょう！<br>";
+      echo "<p><a href='schedule.php'>目標設定へ</a></p>";?>
+    </main>
+<?php
+    require_once 'footer.php';?>
+</div>
+</body>
+</html>
+<?php    exit();
+    }?>
     <main>
         <div id="form">
 <!-- 記録フォーム -->
@@ -155,9 +188,9 @@ require_once 'loginnav.php';?>
 
 
 <!-- 折れ線グラフ -->
-        <div style="width:800px;" >
-    <canvas id="chart"></canvas>
-  </div>
+    <div class="chart">
+      <canvas id="chart"></canvas>
+    </div>
 
 <!-- 一週間表示 -->
 <?php if(isset($_POST["week"])): ?>
@@ -425,14 +458,13 @@ endforeach;
   });
   </script>
 
-<?php endif; ?>
-        </main>
+</main>
+<?php endif; 
+    $pdo = null;?>
 <!-- フッター部分呼び出し -->
 <?php
-endif; 
-    require_once 'footer.php';
-    $pdo = null;
-?>
-    </div>
+endif;
+    require_once 'footer.php';?>
+</div>
 </body>
 </html>

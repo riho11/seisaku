@@ -46,26 +46,29 @@ require_once 'loginnav.php';?>
     set_error_handler('error_handler');
     try { // 目標設定がされていない場合、例外処理で目標設定画面へ
 // SQL実行(scheduleとregistを選択)
-            $sql = "SELECT * FROM `regist` INNER JOIN `schedule` ON regist . id = schedule . regist_id  WHERE `email`=:email";
-            $stmt=$pdo->prepare($sql);
-            $stmt->bindParam(":email",$_SESSION["email"]);
-            $stmt->execute();
-            $result=$stmt->fetch(PDO::FETCH_ASSOC);
-            $stmt = null;
-            if($result["regist_id"] === $result["id"]):
-                // 目標未設定の場合、Warningエラーを発生させる
-            endif;
-        } catch(Exception $e) {
-            echo "目標が設定されていません<br>";
-            echo "目標を設定しましょう！<br>";
-            echo "<p><a href='schedule.php'>目標設定へ</a></p>";?>
-        </main>
+        $sql = "SELECT * FROM `regist` INNER JOIN `schedule` ON regist . id = schedule . regist_id  WHERE `email`=:email";
+        $stmt=$pdo->prepare($sql);
+        $stmt->bindParam(":email",$_SESSION["email"]);
+        $stmt->execute();
+        $result=$stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt = null;
+        if($result["regist_id"] === $result["id"]):
+            // 目標未設定の場合、Warningエラーを発生させる
+        endif;
+    } catch(Exception $e) {?>
+        <!-- アイコンを非表示 -->
+    <style>.firsticon{ display:none;}.error-name{padding-right: 50px;}main{padding: 50px; text-align:center;}</style>
+    <img src="img/tumi-piyo.png" alt="泣く" width="300px"><br><?php
+        echo "目標が設定されていません<br>";
+        echo "目標を設定しましょう！<br>";
+        echo "<p><a href='schedule.php'>目標設定へ</a></p>";?>
+    </main>
 <?php
         require_once 'footer.php';?>
     </div>
 </body>
 </html>
-<?php       exit();
+<?php   exit();
         }
 
     if($_SESSION["email"] === $result["email"]):

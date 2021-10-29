@@ -66,6 +66,9 @@ html{
     width: 100%;
     margin: 0 auto;
 }
+.error{
+    text-align: center;
+}
 
 main{
     width: 60%;
@@ -147,6 +150,7 @@ border-bottom: solid 3px #d7d7d7;
     background: #e9727e;
     color: #fff;
     height: 50px;
+    vertical-align: middle;
 }
 .record-table td{
     text-align: center;

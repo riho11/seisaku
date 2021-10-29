@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="withdrawal.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <title>ゆるゆるdiet｜退会画面</title>
@@ -16,12 +16,20 @@
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'nav.php';
 //DB呼び出し
     require_once 'db.php';
 
-if(isset($_SESSION["email"])):
+    if(!isset($_SESSION["email"])):
+    //ナビ部分呼び出し
+        require_once 'nav.php';
+?>
+<main>
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</main>
+<?php else: 
     $errors = array();
     
 // ↓登録情報確認↓
@@ -52,35 +60,44 @@ if(isset($_SESSION["email"])):
         endif;
     endif;      
 ?>
-<?php if (count($errors)): ?>
+<?php
+if (count($errors)): 
+//ナビ部分呼び出し
+require_once 'loginnav.php';?>
+<main>
     <ul>
+    <li>
+        <img src="img/goukyu.png" alt="泣く" width="300px">
+    </li>
 <?php foreach($errors as $error): ?>
         <li>
 <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8"); ?>
         </li>
 <?php endforeach; ?>
-        <li><a href="regist.php">登録画面に戻る</a></li>
+        <li><a href="mypage.php">マイページに戻る</a></li>
     </ul>
-<?php else:?>
-	<p>退会しました。</p>
-    <p><a href="regist.php">新規登録</a></p>
-<?php endif;
-$pdo = null;
+</main>
+<?php else:
 $_SESSION = array();
 if (isset($_COOKIE[session_name()])):
     setcookie(session_name(), '', time()-1000);
 endif;
 session_destroy();
-
-else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.php'>ログインページ</a></p>
+//ナビ部分呼び出し
+require_once 'nav.php';?>
+<main>
+    <p><img src="img/ja-ne.png" alt="じゃあね" width="300px"></p>
+	<p>退会しました。</p>
+    <p><a href="regist.php">新規登録</a></p>
+</main>
 <?php endif;
-//フッター部分呼び出し
-require_once 'footer.php';
-?>
-        </main> 
-    </div>
+$pdo = null;?>
+<?php
+// フッター部分呼び出し
+endif;
+$pdo=null;
+    require_once 'footer.php';?>
+</div>
 </body>
 </html>
         

@@ -7,19 +7,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="img.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜アイコン変更</title>
 </head>
 <body>
     <div id="wrapper">
 <?php
-// ナビ部分呼び出し
-    require_once 'loginnav.php';
 // DB呼び出し
     require_once 'db.php';
     
-    if(isset($_SESSION["email"])):
+    if(!isset($_SESSION["email"])):
+    
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<main>
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</main>
+<?php else:     
+//ナビ部分呼び出し
+require_once 'loginnav.php';
 
 // SQL取得(img,registを取得)
         $stmt=$pdo->prepare("SELECT * FROM `img` INNER JOIN `regist` ON img . regist_id = regist . id WHERE `email`=:email");
@@ -44,18 +55,18 @@
             $stmt->execute();
             $stmt = null;
         endif;
+        $_SESSION['img']=$_POST["img"];
         $pdo = null;
 ?>
-<p>変更しました</p>
-<?php
-    else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.php'>ログインページ</a></p>
-<?php endif; ?>
-        </main>
+<main>
+    <img src="img/tanosimi-hiyoko.png" alt="たのしみ"  width="200px">
+    <p>変更しました</p>
+    <p>ページを移動すると反映します。</p>
+</main>
 <?php
 // フッター部分呼び出し
-    require_once 'footer.php';
+endif;
+require_once 'footer.php';
 ?>
     </div>
 </body>

@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="edit.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <title>ゆるゆるdiet｜編集画面</title>
@@ -33,40 +33,7 @@
             $namae = $_POST["namae"];
             $_SESSION['namae']=$_POST["namae"];
         endif;
-
-        // $email = null;
-        // if(!isset($_POST["email"]) || !strlen($_POST["email"])):
-        //     $errors["email"] = "メールアドレスを入力してください";
-        // elseif(strlen($_POST["email"]) > 40):
-        //     $errors["email"] = "メールアドレスが長すぎます";
-        // elseif(!preg_match("/^[a-zA-Z0-9]+[a-zA-z0-9\._-]*@[a-zA-Z0-9_-]+.[a-zA-Z0-9\._-]+$/",$_POST["email"])):
-        //     $errors["email"] = "メールアドレスの形式が誤っています";
-        // else:
-    //SQL実行(SELECT)
-        //     $stmt=$pdo->prepare("SELECT `pass` FROM `regist` WHERE `email` =:email");
-        //     $stmt->bindParam(':email',$_POST["email"]);
-        //     $stmt->execute();
-        //     $result=$stmt->fetch(PDO::FETCH_ASSOC);
-        //     if($result):
-        //         $errors["email"] = "このメールアドレスは登録済みです";
-        //     else:
-        //         $email = $_POST["email"];
-        //         $_SESSION['email']=$_POST["email"];
-        //     endif;
-        //     $stmt = null;
-        // endif;
-
-        // $pass = null;
-        // if(!isset($_POST["pass"]) || !strlen($_POST["pass"])):
-        //     $errors["pass"] = "パスワードを入力してください";
-        // elseif(!preg_match("/^[a-zA-Z0-9]{6,12}$/",$_POST["pass"])):
-        //     $errors["pass"] = "パスワードの形式が違います";
-        // else:
-        //     $pass = $_POST["pass"];
-        //     $_SESSION['pass']=$_POST["pass"];
-        //     $hash = password_hash($pass,PASSWORD_DEFAULT);
-        // endif;
-
+        
         $sex = null;
         if(!isset($_POST["sex"])):
             $errors["sex"] = "性別を選択してください";

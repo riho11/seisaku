@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="mypage.css">
+    <link rel="stylesheet" href="withdrawal.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <title>ゆるゆるdiet｜退会画面</title>
@@ -16,10 +16,23 @@
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
+//DB呼び出し
+    require_once 'db.php';
 
-    if(isset($_SESSION["email"])):
+    if(!isset($_SESSION["email"])):
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<div class="error">
+    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+    <p>通信に失敗しました</p>
+    <p>ログインしなおしてください</p>
+    <p><a href='login.php'>ログインページ</a></p>
+</div>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';
     $errors = array();
     
 // ↓登録情報確認↓
@@ -33,20 +46,26 @@
     endif;
 
 if(count($errors)):?>
-<ul>
+<ul class="error">
+    <li>
+        <img src="img/goukyu.png" alt="泣く" width="300px">
+    </li>
 <?php foreach($errors as $error): ?>
     <li>
 <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
     </li>
 <?php endforeach; ?>
-    <li><a href="regist.php">登録画面に戻る</a></li>
+    <li><a href="mypage.php">マイページに戻る</a></li>
 </ul>
  <?php else:?>
 
-    <form action="withdrawal2.php" method="post">
+    <form action="withdrawal2.php" method="post" class="withdrawal-form">
         <input type="hidden" name="email" value="<?php echo $_SESSION["email"]; ?>">
         <input type="hidden" name="pass" value="<?php echo $pass; ?>">
-        <table>
+        <table class="withdrawal">
+            <tr>
+                <td><img src="img/batsumaru.png" alt="error" width="300px"></td>
+            </tr>
             <tr>
                 <td>退会するとすべての記録が削除されます。</td> 
             </tr>
@@ -57,22 +76,17 @@ if(count($errors)):?>
                 <td>本当に退会しますか？</td> 
             </tr>
             <tr class="tr-center">
-                <td><input class="btn btn-border" type="submit" value="退会"></td>
-                <td><input class="btn btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
+                <td><input class="btn-border" type="submit" value="退会">
+                <input class="btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
             </tr>
         </table>
     </form>
-<?php endif;
-else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.php'>ログインページ</a></p>
-<?php endif; ?>
-        </main>
+<?php endif;?>
 <!-- フッター部分呼び出し -->
 <?php
-    require_once 'footer.php';
-    $pdo = null;
-?>
-    </div>
+endif;
+$pdo=null;
+    require_once 'footer.php';?>
+</div>
 </body>
 </html>

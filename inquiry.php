@@ -36,6 +36,8 @@ header('X-FRAME-OPTIONS: SAMEORIGIN');
     
 //ナビ部分呼び出し
 require_once 'loginnav.php';?>
+<!-- アイコンを非表示 -->
+<style>.firsticon{ display:none;}.error-name{padding-right: 50px};</style>
     <main>
         <div id="form">
             <h1><span class="under">お問い合わせフォーム</span></h1>

@@ -66,29 +66,11 @@ html{
     width: 100%;
     margin: 0 auto;
 }
-
-main{
-    margin: 0 auto;
-    text-align: center;
-}
-
 th{
     font-weight: bolder;
     font-size: 110%;
 }
 
-/* フォーム項目設定 */
-.hissu{
-    border-radius: 10px;
-    margin-right: 5px;
-    padding-top: 3px;
-    padding-bottom: 3px;
-    width: 50px;
-    display: inline-block;
-    text-align: center;
-    background: #378fb3;
-    color: white;
-}
 /* 登録ボタン */
 .btn-border {
     border: 2px solid #000;
@@ -111,6 +93,10 @@ main h1{
     margin: 1em 0 0.67em;
 }
 
+main p{
+    padding: 20px;
+}
+
 .under {
     background: linear-gradient(transparent 70%, #fcd0d8 70%);
 }
@@ -123,31 +109,114 @@ table{
     border-collapse: collapse;
     margin: 20px auto 50px;
 }
-    
+   
 .form-table {
     width: 100%;
 }
 /* テキストの枠線 */
-#record_weight,#record_bodyfat{
-    width: 50%;
+#namae,#year,#month,#day,#height,#goal_weight,#goal_year,#goal_month,#goal_day,#goal_bodyfat{
+    width: 100%;
     padding: 5px;
     border-radius: 4px;
     border: none;
     box-shadow: 0 0 0 1px #ccc;
 }
-
 /* テキストを選択した時の色 */
-#record_weight:focus,#record_bodyfat:focus{
+#namae:focus,#year:focus,#month:focus,#day:focus,#height:focus,#goal_weight:focus,#goal_year:focus,#goal_month:focus,#goal_day:focus,#goal_bodyfat:focus{
     outline: 0;
     box-shadow: 0 0 0 2px rgb(33, 150, 243) ;
 }
-  /* サンプル文字の色 */
+/* サンプル文字の色 */
 ::placeholder{
-    color: rgb(192, 190, 190);
+    color: rgb(173, 173, 173);
 }
 
-.error{
+#pass {
+    border: none; /* デフォルトの枠線を消す */
+  }
+  
+ .error{
     text-align: center;
+    padding: 30px;
+}
+.count{
+    padding: 50px;
+    text-align: center;
+}
+.goal{
+    padding: 50px;
+    text-align: center;
+}
+
+/* スマホサイズ */
+@media screen and (min-width:0px) and (max-width:599px){
+    .form-table td {
+        display: block;
+        box-sizing: border-box;
+        width:100%;
+        border-top: 2px solid #d7d7d7;
+        padding: 20px;
+        margin: auto;
+    }
+    
+    .form-table th {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        border-top: 2px solid #d7d7d7;
+        padding: 20px;
+        background: #ffecea;
+        padding-left: 10px;
+        position: relative;
+        text-align: left;
+    }
+    
+    main{
+        width: 100%;
+    }
+    
+    #namae,#height,#goal_weight,#bodyfat,#goal_bodyfat{
+        width: 50%;
+    }
+    
+    #year,#month,#day,#goal_year,#goal_month,#goal_day{
+        width: 20%;
+    }
+    }
+    /* タブレットサイズ */
+    @media screen and (min-width:600px) and (max-width:1024px){
+    .form-table td {
+        display: block;
+        box-sizing: border-box;
+        width:100%;
+        border-top: 2px solid #d7d7d7;
+        padding: 20px;
+    
+    }
+    
+    .form-table th {
+        display: block;
+        box-sizing: border-box;
+        width: 100%;
+        border-top: 2px solid #d7d7d7;
+        padding: 20px;
+        background: #ffecea;
+        padding-left: 10px;
+        position: relative;
+        text-align: left;
+    }
+    
+    main{
+        width: 100%;
+    }
+    
+    #namae,#height,#goal_weight,#bodyfat,#goal_bodyfat{
+        width: 50%;
+    }
+    
+    #year,#month,#day,#goal_year,#goal_month,#goal_day{
+        width: 20%;
+    }
 }
 
 /* PCサイズ */
@@ -159,10 +228,8 @@ table{
     }
     
     main{
+        width: 50%;
         margin: 0 auto;
-    }
-    .form-table{
-        width: 350px;
     }
     
     .form-table td {
@@ -173,16 +240,15 @@ table{
         padding: 20px;
         vertical-align: top;
         text-align: left;
-        width: 100px;
+        width: 150px;
     }
-
-    .form-table .bodyfat{
-        text-align: right;
+    
+    #namae,#height,#goal_weight,#bodyfat,#goal_bodyfat{
+        width: 50%;
     }
-    .chart{
-        width: 800px;
-        margin: auto;
-        padding: 30px;
+    
+    #year,#month,#day,#goal_year,#goal_month,#goal_day{
+        width: 20%;
     }
-}
+    }
     
