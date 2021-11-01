@@ -7,7 +7,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="img.css">
+    <link rel="stylesheet" href="css/img.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜アイコン変更</title>
 </head>

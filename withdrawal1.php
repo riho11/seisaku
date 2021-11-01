@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="withdrawal.css">
+    <link rel="stylesheet" href="css/withdrawal.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <link href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" rel="stylesheet">
     <title>ゆるゆるdiet｜退会画面</title>

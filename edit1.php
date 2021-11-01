@@ -8,7 +8,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="edit.css">
+    <link rel="stylesheet" href="css/edit.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.bundle.js"></script>
     <title>ゆるゆるdiet｜編集画面</title>
