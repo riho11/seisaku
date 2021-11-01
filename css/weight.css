@@ -149,6 +149,16 @@ table{
 .error{
     text-align: center;
 }
+.chart-button {
+    padding: .5em 1em;
+    background: white;
+    border-radius: 10px 50px/50px 10px;
+    border: dashed 2px #333;
+    margin-bottom: 20px;
+  }
+.chart-button:hover{
+    background: skyblue;
+}
 
 /* PCサイズ */
 @media screen and (min-width:1025px){
