@@ -162,7 +162,6 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
  endif;// 体重がセットされた時のみ実行↑
 ?>
 
-
 <?php 
 // 日々の体重を取得
   $stmt=$pdo -> prepare("SELECT * FROM `weight` WHERE `regist_id`=:regist_id ORDER BY `date` ASC");
@@ -179,10 +178,11 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
   $stmt = null;
 ?>
 
+
 <!-- 押したら表示されるボタン-->
 <form action="weight.php" method="POST">
-    <button name="week" value="一週間">一週間</button>
-    <button name="month" value="一カ月">一カ月</button>
+    <button class="chart-button" name="week" value="一週間">一週間</button>
+    <button class="chart-button" name="month" value="一カ月">一カ月</button>
 </form>
 <p>※初期値は登録した場合のみ表示されます</p>
 
@@ -245,16 +245,19 @@ $week_last = date("Y-m-d",strtotime("last day of previous month")); //先月の�
 $str_past = explode("-",$week_past);
 $str_last = explode("-",$week_last);
 $Ym = date("Y-m-");
+$Ym_lastmonth = date("Y-") . $str_last[1] ."-";
   if(date("d") > $str_past[2]):
     for($i = $str_past[2]; $i <= date("d"); $i++){
       array_push($every_date,$Ym .$i);
     }
   else:
     for($i = $str_past[2]; $i <= $str_last[2]; $i++){
-      array_push($every_date,$Ym .$i);
+      $sprintf = sprintf("%02d",$i);
+      array_push($every_date,$Ym_lastmonth .$i);
     }
     for($i = 1; $i <= date("d"); $i++){
-      array_push($every_date,$Ym .$i);
+      $sprintf = sprintf("%02d",$i);
+      array_push($every_date,$Ym.$sprintf);
     }
   endif;
 // DBに存在しない日を取得、配列の最後にNULLを追加
@@ -267,9 +270,9 @@ endforeach;
 $exist=Array();
 $week_past = date("Y-m-d",strtotime("-6 day"));
 foreach($response as $array):
-if($week_past <= $array["date"]):
-  array_push($exist,$array["date"] . '-'.$array["record_weight"]);
-endif;
+  if($week_past <= $array["date"]):
+    array_push($exist,$array["date"] . '-'.$array["record_weight"]);
+  endif;
 endforeach;
 // 一つの配列に入れ、若い日付に直す。体重の値のみ取り出す。
 $merge=array_merge($exist,$null);
@@ -292,9 +295,9 @@ echo $initial_value["bodyfat"] . ',';
 $exist=Array();
 $week_past = date("Y-m-d",strtotime("-6 day"));
 foreach($response as $array):
-if($week_past <= $array["date"]):
-  array_push($exist,$array["date"] . '-'.$array["record_bodyfat"]);
-endif;
+  if($week_past <= $array["date"]):
+    array_push($exist,$array["date"] . '-'.$array["record_bodyfat"]);
+  endif;
 endforeach;
 // 一つの配列に入れ、若い日付に直す。体脂肪の値のみ取り出す。
 $merge=array_merge($exist,$null);
@@ -379,7 +382,8 @@ $Ym = date("Y-m-");
 $Ym_lastmonth = date("Y-") . $str_last[1] ."-";
 // 今日の日付より１カ月前の日付が大きい場合(月をまたぐ場合)
   for($i = $str_past[2]; $i <= $str_last[2]; $i++){
-    array_push($every_month,$Ym_lastmonth.$i);
+    $sprintf = sprintf("%02d",$i);
+    array_push($every_month,$Ym_lastmonth.$sprintf);
   }
   for($i = 01; $i <= date("d"); $i++){
     $sprintf = sprintf("%02d",$i);
