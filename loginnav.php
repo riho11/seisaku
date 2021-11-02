@@ -237,7 +237,7 @@ nav #list{
 .cp_navi > ul > li > div ul > li > a {
     color: #ffffff;
     display: block;
-    padding: 12px 24px;
+    padding: 12px 50px;
     text-decoration: none;
 }
 
@@ -279,8 +279,7 @@ nav #list{
                         </ul>
                     </div>
                 </li>
-                <li class="list"><a class="line" href="q&a.php">Q&A</a></li>
-                <li class="list"><a class="line" href="inquiry.php">お問合せ</a></li>
+                <li class="list"><a class="line" href="communication.php">みんなで交流</a></li>
                 <li class="list"><a class="line" href="logout.php">ログアウト</a></li>
             </ul>
         </div>

@@ -16,6 +16,7 @@ a{
 
 .a_footer{
     color: white;  
+    padding:0 25px;
     line-height: 30px;
     font-size:150%;
 }
@@ -26,6 +27,7 @@ a{
 
 .p_footer{
     text-align: center;
+    display:flex;
 }
 
 .copyright{
@@ -49,7 +51,10 @@ a{
 <!-- html記載 -->
 <footer>
     <div id="footer">
-        <p class="p_footer"><a class="a_footer" href="site.html">サイトについて</a></p><br>
+        <ul class="p_footer">
+            <li><a class="a_footer" href="site.html">サイトについて</a></li>
+            <li><a class="a_footer" href="inquiry.php">お問合せ</a></li>
+        </ul>
         <div class="img_footer">
             <a href=""><img src="img/facebook.png" alt="フェイスブック" width="50px"></a>
             <a href=""><img src="img/line.png" alt="LINE" width="50px"></a>

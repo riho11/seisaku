@@ -59,7 +59,7 @@ table {
 
 html{
     font-family: 'APJapanesefont'; 
-    font-size:120%;
+    font-size:140%;
 }
 
 #wrapper{
@@ -180,10 +180,9 @@ table{
     }
     
     .form-table th {
-        padding: 20px;
-        vertical-align: top;
-        text-align: left;
-        width: 100px;
+        padding: 10px 0 ;
+        text-align: right;
+        width: 130px;
     }
 
     .form-table .bodyfat{

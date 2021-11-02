@@ -66,26 +66,88 @@ html{
     width: 100%;
     margin: 0 auto;
 }
-
 main{
-    padding: 100px;
+    width: 80%;
     text-align: center;
+    margin: 50px auto;
 }
-.img{
-    width: 200px;
+main h1{
+    margin: 30px;
+    font-size: 150%;
+}
+main p{
+    margin: 10px;
+}
+.comment-icon{
+    width:  60px;
+    height: 60px;
+    border-radius:50%;
+}
+.speech-balloon {
+    position: relative;
+    display: inline-block;
+    margin: 1.5em 0 1.5em 15px;
+    padding: 10px 20px;
+    min-width: 120px;
+    max-width: 70%;
+    color: #555;
+    background: #e0edff;
+  }
+
+.speech-balloon:before {
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: -30px;
+    margin-top: -15px;
+    border: 15px solid transparent;
+    border-right: 15px solid #e0edff;
+}
+.speech-balloon a{
+    color: rgb(204, 9, 9);
+}
+
+.speech-balloon .box-title {
+    position: absolute;
+    display: inline-block;
+    top: -25px;
+    left: 0;
+    padding: 0 9px;
+    height: 25px;
+    line-height: 25px;
+    font-size: 120%;
+    background: #62c1ce;
+    color: #ffffff;
+    /* font-weight: bold; */
+    border-radius: 5px 5px 0 0;
+}
+.community{
+    margin-top: 50px;
+}
+/* テキストの枠線 */
+#namae,#comment{
+    margin: 10px;
+    padding: 5px;
+    border-radius: 4px;
+    border: none;
+    box-shadow: 0 0 0 1px #ccc;
+    vertical-align: middle;
+}
+/* テキストを選択した時の色 */
+#namae:focus,#comment:focus{
+    outline: 0;
+    box-shadow: 0 0 0 2px rgb(33, 150, 243) ;
+}
+/* 送信ボタン */
+.btn-border {
+    border: 2px solid #000;
     margin-bottom: 50px;
+    width: 100%;
+    max-width: 100px;
+    border-radius: 30px;
+    background: #fff;
+    transition: .4s;
 }
-
-/* PCサイズ */
-@media screen and (min-width:1025px){
-#wrapper{
-    flex-wrap:wrap;
-    max-width:2000px;
-    margin:0 auto;
-}
-
-main{
-    width: 50%;
-    margin: 0 auto;
-}
+.error{
+    color:red;
 }

@@ -68,7 +68,6 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
 </html>
 <?php    exit();
     }?>
-    <main>
         <div id="form">
 <!-- 記録フォーム -->
             <h1><span class="under">体重記録</span></h1>
