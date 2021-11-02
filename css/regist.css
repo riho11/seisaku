@@ -76,7 +76,6 @@ th{
     line-height: 30px;
     font-size: 90%;
 }
-
 /* フォーム項目設定 */
 .hissu{
     border-radius: 10px;
@@ -202,6 +201,7 @@ table{
 
 main{
     width: 100%;
+    margin: 0 auto;
 }
 
 #height,#weight{
@@ -236,6 +236,7 @@ main{
 
 main{
     width: 100%;
+    margin: 0 auto;
 }
 
 #height,#weight{
@@ -246,6 +247,7 @@ main{
     width: 20%;
 }
 }
+
 /* PCサイズ */
 @media screen and (min-width:1025px){
 #wrapper{
@@ -280,7 +282,7 @@ main{
 
 .form-table .birth{
     text-align: right;
-    padding-top: 0;
+    padding: 0 50px 20px 20px;
 }
 .form-table #birth{
     padding-bottom: 0;

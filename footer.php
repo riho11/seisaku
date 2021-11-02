@@ -45,6 +45,10 @@ a{
 .copyright{
     font-size: 15px;
 } 
+.a_footer{
+    font-size:120%;
+    padding:0 7px;
+}
 }
 </style>
 

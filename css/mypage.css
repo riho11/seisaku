@@ -98,13 +98,12 @@ main{
     border-bottom: dashed 2px #6594e0;
 }
 .mytable th{
-padding: 0.4em 0.5em;
-color: #494949;
-background: #f4f4f4;
-border-left: solid 5px #7db4e6;
-border-bottom: solid 3px #d7d7d7;
+    padding: 0.4em 0.5em;
+    color: #494949;
+    background: #f4f4f4;
+    border-left: solid 5px #7db4e6;
+    border-bottom: solid 3px #d7d7d7;
 }
-
 .topmy{
     margin: 60px 0;
     position: relative;
@@ -176,12 +175,47 @@ border-bottom: solid 3px #d7d7d7;
 
 
 @media screen and (min-width:841px){
-
 	#wrapper{
 		flex-wrap:wrap;
 		max-width:2000px;
 		margin:0 auto;
 	}
-
-
+}
+/* スマホサイズ */
+@media screen and (min-width:0px) and (max-width:1024px){
+    main{
+        width: 80%;
+        margin: 0 auto;
+    }
+   .topmy h1{
+        font-size: 160%;
+    }
+    .topmy a{
+        margin-right: 10px;
+    }
+    .goal-table td{
+        padding: 10px;
+        font-size: 110%;
+    }
+    .record-table th:last-child{
+        padding: 0 20px;
+    }
+    .mytable th{
+        padding: 0.4em 0.5em;
+        color: #494949;
+        background: #f4f4f4;
+        border-left: solid 5px #7db4e6;
+        border-bottom: solid 3px #d7d7d7;
+    }
+    .mytable td {
+        border-bottom: 1px dashed #ccc;
+        padding: 5px;
+    }
+    .basics{
+        font-size: 130%;
+        padding: 50px 0;
+    }
+    .basics span{
+        font-size: 150%;
+    }
 }

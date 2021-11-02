@@ -7,7 +7,7 @@ header{
     width: 200px;
 }
 
-/* スマホサイズ */
+/* スマホ・タブレットサイズ */
 @media screen and (min-width:0px) and (max-width:1024px){
     * {
 	box-sizing: border-box;
