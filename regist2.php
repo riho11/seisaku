@@ -70,7 +70,7 @@
     $month = null;
     if(!isset($_POST["month"])):
         $errors["month"] = "生年月日の月を選択してください";
-    elseif( $_POST["year"] > date("Y")):
+    elseif( $_POST["year"] > date("Y") ||  $_POST["year"] < "1900"):
         $errors["birth"] = "正しい生年月日を選択してください";
     elseif($_POST["year"] === date("Y")):
         if($_POST["month"] > date("m")):

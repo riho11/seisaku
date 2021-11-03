@@ -26,7 +26,6 @@
 //ナビ部分呼び出し
     require_once 'nav.php';
 ?>
-    <style>.error-name{ display:none;}</style>
 <div class="error">
     <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
     <p>通信に失敗しました</p>

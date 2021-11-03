@@ -165,8 +165,9 @@ table{
     padding: 20px;
     text-align: left;
   }
- .error{
+ .error,.change{
      text-align: center;
+     padding: 30px;
  }
 
  .sukima{

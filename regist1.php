@@ -77,7 +77,7 @@
 
     $year = null;
     if(!isset($_POST["year"])):
-        $errors["year"] = "生年月日の年を選択してください";
+        $errors["year"] = "生年月日の年を入力してください";
     else:
         $year = $_POST["year"];
     endif;
@@ -85,7 +85,7 @@
     $month = null;
     if(!isset($_POST["month"])):
         $errors["month"] = "生年月日の月を選択してください";
-    elseif( $_POST["year"] > date("Y")):
+    elseif( $_POST["year"] > date("Y") || $_POST["year"] < "1900"):
         $errors["birth"] = "正しい生年月日を選択してください";
         $month = $_POST["month"];
     elseif($_POST["year"] === date("Y")):
@@ -133,7 +133,6 @@
 
 	if(count($errors)):
 ?>
-
 		<ul class="error">
 			<li>
                 <img src="img/goukyu.png" alt="泣く" width="300px">

@@ -94,15 +94,6 @@ main p{
     background: #e0edff;
   }
 
-.speech-balloon:before {
-    content: "";
-    position: absolute;
-    top: 50%;
-    left: -30px;
-    margin-top: -15px;
-    border: 15px solid transparent;
-    border-right: 15px solid #e0edff;
-}
 .speech-balloon a{
     color: rgb(204, 9, 9);
 }
@@ -110,15 +101,14 @@ main p{
 .speech-balloon .box-title {
     position: absolute;
     display: inline-block;
-    top: -25px;
+    top: -31px;
     left: 0;
-    padding: 0 9px;
-    height: 25px;
+    padding: 3px 9px;
+    height: 31px;
     line-height: 25px;
     font-size: 120%;
     background: #62c1ce;
     color: #ffffff;
-    /* font-weight: bold; */
     border-radius: 5px 5px 0 0;
 }
 .community{
@@ -150,4 +140,22 @@ main p{
 }
 .error{
     color:red;
+}
+
+/* スマホ・タブレットサイズ */
+@media screen and (min-width:0px) and (max-width:1024px){
+
+}
+
+/* PCサイズ */
+@media screen and (min-width:1025px){       
+    .speech-balloon:before {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: -30px;
+        margin-top: -15px;
+        border: 15px solid transparent;
+        border-right: 15px solid #e0edff;
+    }
 }

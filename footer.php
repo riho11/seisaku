@@ -16,7 +16,6 @@ a{
 
 .a_footer{
     color: white;  
-    padding:0 25px;
     line-height: 30px;
     font-size:150%;
 }
@@ -27,7 +26,6 @@ a{
 
 .p_footer{
     text-align: center;
-    display:flex;
 }
 
 .copyright{
@@ -47,7 +45,6 @@ a{
 } 
 .a_footer{
     font-size:120%;
-    padding:0 7px;
 }
 }
 </style>
@@ -57,7 +54,6 @@ a{
     <div id="footer">
         <ul class="p_footer">
             <li><a class="a_footer" href="site.html">サイトについて</a></li>
-            <li><a class="a_footer" href="inquiry.php">お問合せ</a></li>
         </ul>
         <div class="img_footer">
             <a href=""><img src="img/facebook.png" alt="フェイスブック" width="50px"></a>
@@ -67,3 +63,4 @@ a{
         <p class="copyright">(C)2021　ゆるゆるdiet　All Rights Reserved</p>
     </div>
 </footer>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>

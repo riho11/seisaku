@@ -24,13 +24,15 @@
     require_once 'nav.php';
 ?>
 <main>
-    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
-    <p>通信に失敗しました</p>
-    <p>ログインしなおしてください</p>
-    <p><a href='login.php'>ログインページ</a></p>
+    <div class="error">
+        <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+        <p>通信に失敗しました</p>
+        <p>ログインしなおしてください</p>
+        <p><a href='login.php'>ログインページ</a></p>
+    </div>
 </main>
 <?php else: 
-    
+
 //ナビ部分呼び出し
 require_once 'loginnav.php';?>
 <main>
@@ -153,7 +155,7 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
 <a id="link"></a>
 <form action="communication.php" method="GET">
     削除したい投稿番号を入力してください<br>
-    <input type="number" name="delete" required>
+    <input type="number" name="delete" min="1" required>
     <input type="submit" name="submit" value="削除">
 </form>
 <?php
@@ -172,6 +174,8 @@ try{
             $stmt->bindParam(':id',$_GET["delete"]);
             $stmt->execute();
             $stmt=null;
+            // $alert = "<script>alert('削除できました');window.location.reload();</script>";
+            // echo $alert;
         else:
             $alert = "<script>alert('ほかの人のコメントは消せません')</script>";
             echo $alert;
