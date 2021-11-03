@@ -26,6 +26,29 @@ header{
 .header h1{
     margin-right: auto;
 }
+/* 上へ戻るボタン */
+#pagetop{
+    display: none;
+    position: fixed;
+    z-index: 150;
+    right: 15px;
+    bottom: 60px;
+}
+#pagetop a{
+    display: block;
+    font-size: 0;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background: #7db4e6;
+    border-radius: 50%;
+    line-height: 50px;
+}
+#pagetop a i{
+    font-size: 20px;
+    color:#fff;
+    line-height: 50px;
+}
 
 
 /* スマホサイズ */
@@ -52,16 +75,16 @@ button {
 	-webkit-appearance: none;
 	appearance: none;
 }
-    .btn {
+.btn {
 	/* ボタンの配置位置  */
-	position: fixed;
+	position: absolute;
 	top: 32px;
 	right: 16px;
 	/* 最前面に */
 	z-index: 10;
 	/* ボタンの大きさ  */
-	width: 48px;
-	height: 48px;
+	width: 40px;
+	height: 40px;
 }
 /***** 真ん中のバーガー線 *****/
 .btn-line {
@@ -121,24 +144,19 @@ button {
 	/* メニューの位置マイナス指定で画面外に */
 	right: -70%;
 	width: 50%;
-	height: 70vh;
+	height: 80vh;
 	background-color: #fa788b;
 	color: #efefef;
 	transition: .3s;
 }
 .list {
-	/* メニューテキスト位置をリスト内中心に */
-	display: flex;
-	align-items: center;
-	justify-content: center;
-    font-size: 40px;
+    font-size: 35px;
 	width: 100%;
 	height: 100%;
 }
 .list:hover {
 	background-color: rgba(255, 255, 255, .5);
 	color: #333;
-	cursor: pointer;
 	transition: .3s;
 }
 /***** メニューオープン時位置0にして画面内に *****/
@@ -147,7 +165,25 @@ button {
 	right: 0;
 }
 .line{
+    display:block;
+	text-align:center;
     color: white;
+	height: 16vh;
+    padding-top:5vh;
+}
+.cp_navi > ul > li > div {
+	background-color: #E95885;
+	height: 25vh;
+}
+.cp_navi > ul > li > div ul > li > a {
+    color: #ffffff;
+    text-align:center;
+    display:block;
+    padding-top:10px;
+	height: 8.3vh;
+}
+.cp_navi > ul > li > div ul > li:hover > a {
+    background-color: rgba( 255, 255, 255, 0.1);
 }
 }
 
@@ -166,11 +202,6 @@ button {
 	list-style-type: none;
     width: 100%;
     text-align: center;
-}
-
-.menu{
-    text-align: left;
-	list-style-type: none;
 }
 
 .cp_navi > ul > li > a {
@@ -207,16 +238,6 @@ nav #list{
     display: flex;
 }
 
-/* ▽マーク */
-.cp_navi > ul > li > a > .caret {
-    border-top: 4px solid white;
-    border-right: 4px solid transparent;
-    border-left: 4px solid transparent;
-    content: '';
-    display: inline-block;
-    vertical-align: middle;
-}
-
 .cp_navi > ul > li > div {
     font-size: 0.9em;
 	background-color: #E95885;
@@ -238,7 +259,6 @@ nav #list{
     color: #ffffff;
     display: block;
     padding: 12px 50px;
-    text-decoration: none;
 }
 
 .cp_navi > ul > li > div ul > li:hover > a {
@@ -253,6 +273,7 @@ nav #list{
 </style>
 
 <!-- *****↓html記載↓***** -->
+<p id="pagetop"><a href="#"><i class="fas fa-angle-up"></i></a></p>
 <div class="nav">
     <header>
 		<div class="header">
@@ -270,7 +291,7 @@ nav #list{
             <ul id="list">
                 <li class="list"><a class="line" href="mypage.php">マイページ</a></li>
                 <li class="list">
-					<a class="line" href="weight.php">記録 <span class="caret"></span></a>
+					<a class="line" href="#">記録 <i class="fas fa-caret-down fa-xs"></i></a>
                     <div>
 						<ul>
 							<li class="menu"><a href="weight.php">体重</a></li>
@@ -280,10 +301,12 @@ nav #list{
                     </div>
                 </li>
                 <li class="list"><a class="line" href="communication.php">みんなで交流</a></li>
+                <li class="list"><a class="line" href="inquiry.php">お問い合わせ</a></li>
                 <li class="list"><a class="line" href="logout.php">ログアウト</a></li>
             </ul>
         </div>
     </nav>
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 </div>
 
@@ -292,5 +315,32 @@ $(function () {
   $('.js-btn').on('click', function () {        // js-btnクラスをクリックすると、
     $('#list , .btn-line').toggleClass('open'); // メニューとバーガーの線にopenクラスをつけ外しする
   })
+});
+// ハンバーガーメニューの記録(多階層)
+$(function() {
+    // 記録の中身を非表示
+    $("#list div").css("display", "none");
+    // 記録を押したら中身表示
+    $("#list a").click(function() {
+        $("#list a").not(this).next().slideUp("fast");
+        $(this).toggleClass("open").next().slideToggle("fast");
+    })
+});
+
+// 上へ戻るボタン
+$(function(){
+  var pagetop = $('#pagetop');
+  pagetop.hide();
+  $(window).scroll(function () {
+     if ($(this).scrollTop() > 50) {
+          pagetop.fadeIn();
+     } else {
+          pagetop.fadeOut();
+     }
+  });
+  pagetop.click(function () {
+     $('body, html').animate({ scrollTop: 0 }, 500);
+     return false;
+  });
 });
 </script>

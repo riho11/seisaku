@@ -6,6 +6,29 @@ header{
 .taiju{
     width: 200px;
 }
+/* 上へ戻るボタン */
+#pagetop{
+    display: none;
+    position: fixed;
+    z-index: 150;
+    right: 15px;
+    bottom: 60px;
+}
+#pagetop a{
+    display: block;
+    font-size: 0;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background: #7db4e6;
+    border-radius: 50%;
+    line-height: 50px;
+}
+#pagetop a i{
+    font-size: 20px;
+    color:#fff;
+    line-height: 50px;
+}
 
 /* スマホ・タブレットサイズ */
 @media screen and (min-width:0px) and (max-width:1024px){
@@ -31,9 +54,9 @@ button {
 	-webkit-appearance: none;
 	appearance: none;
 }
-    .btn {
+.btn {
 	/* ボタンの配置位置  */
-	position: fixed;
+	position: absolute;
 	top: 32px;
 	right: 16px;
 	/* 最前面に */
@@ -106,10 +129,6 @@ button {
 	transition: .3s;
 }
 .list {
-	/* メニューテキスト位置をリスト内中心に */
-	display: flex;
-	align-items: center;
-	justify-content: center;
     font-size: 40px;
 	width: 100%;
 	height: 100%;
@@ -117,7 +136,6 @@ button {
 .list:hover {
 	background-color: rgba(255, 255, 255, .5);
 	color: #333;
-	cursor: pointer;
 	transition: .3s;
 }
 /***** メニューオープン時位置0にして画面内に *****/
@@ -126,29 +144,11 @@ button {
 	right: 0;
 }
 .line{
+    display:block;
+    width:100%;
+	padding:60px;
+	text-align:center;
     color: white;
-}
-/* 上へ戻るボタン */
-#pagetop{
-    display: none;
-    position: fixed;
-    right: 15px;
-    bottom: 60px;
-}
-#pagetop a{
-    display: block;
-    font-size: 0;
-    width: 50px;
-    height: 50px;
-    text-align: center;
-    background: #7db4e6;
-    border-radius: 50%;
-    line-height: 50px;
-}
-#pagetop a i{
-    font-size: 20px;
-    color:#fff;
-    line-height: 50px;
 }
 }
 
@@ -235,7 +235,7 @@ nav #list{
         </div>
     </nav>
     
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 </div>
 <script>
