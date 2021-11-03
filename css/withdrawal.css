@@ -133,6 +133,10 @@ main h1{
 .form-table {
     width: 100%;
 }
+.error,.change{
+    text-align: center;
+    padding: 30px;
+}
 
 /* スマホ・タブレットサイズ */
 @media screen and (min-width:0px) and (max-width:1024px){

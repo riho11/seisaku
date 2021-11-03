@@ -24,10 +24,12 @@
         require_once 'nav.php';
 ?>
 <main>
-    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
-    <p>通信に失敗しました</p>
-    <p>ログインしなおしてください</p>
-    <p><a href='login.php'>ログインページ</a></p>
+    <div class="error">
+        <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+        <p>通信に失敗しました</p>
+        <p>ログインしなおしてください</p>
+        <p><a href='login.php'>ログインページ</a></p>
+    </div>
 </main>
 <?php else: 
     $errors = array();
@@ -42,54 +44,50 @@
         $pass = $_POST["pass"];
     endif;
 
-    if(count($errors)===0):
-        //SQL実行(SELECT)
-        $stmt=$pdo->prepare("SELECT `id`,`email`,`pass` FROM `regist` WHERE `email`=:email");
-        $stmt->bindParam(':email',$_SESSION["email"]);
-        $stmt->execute();
-        $result=$stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt=null;
-        if($_POST["email"] === $result["email"]):
-            if(password_verify($_POST["pass"],$result["pass"])):
-            //SQL実行(DELEET)
-                $stmt=$pdo->prepare("DELETE FROM `regist` WHERE `email`=:email");
-                $stmt->bindParam(':email',$_SESSION["email"]);
-                $stmt->execute();
-                $stmt=null;
-            endif;
+    //SQL実行(SELECT)
+    $stmt=$pdo->prepare("SELECT `id`,`email`,`pass` FROM `regist` WHERE `email`=:email");
+    $stmt->bindParam(':email',$_SESSION["email"]);
+    $stmt->execute();
+    $result=$stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt=null;
+    if($_SESSION["email"] === $result["email"]):
+        if(!password_verify($_POST["pass"],$result["pass"])):
+            $errors["pass"] = "パスワードが違います";
         endif;
-    endif;      
+    endif;
 ?>
 <?php
 if (count($errors)): 
 //ナビ部分呼び出し
 require_once 'loginnav.php';?>
 <main>
-    <ul>
-    <li>
-        <img src="img/goukyu.png" alt="泣く" width="300px">
-    </li>
+    <ul class="error">
+        <li><img src="img/goukyu.png" alt="泣く" width="300px"></li>
 <?php foreach($errors as $error): ?>
-        <li>
-<?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8"); ?>
-        </li>
+        <li><?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8"); ?></li>
 <?php endforeach; ?>
         <li><a href="mypage.php">マイページに戻る</a></li>
     </ul>
 </main>
 <?php else:
-$_SESSION = array();
-if (isset($_COOKIE[session_name()])):
-    setcookie(session_name(), '', time()-1000);
-endif;
-session_destroy();
-//ナビ部分呼び出し
-require_once 'nav.php';?>
-<main>
-    <p><img src="img/ja-ne.png" alt="じゃあね" width="300px"></p>
-	<p>退会しました。</p>
-    <p><a href="regist.php">新規登録</a></p>
-</main>
+    //SQL実行(DELEET)
+    $stmt=$pdo->prepare("DELETE FROM `regist` WHERE `email`=:email");
+    $stmt->bindParam(':email',$_SESSION["email"]);
+    $stmt->execute();
+    $stmt=null;
+
+    $_SESSION = array();
+    if (isset($_COOKIE[session_name()])):
+        setcookie(session_name(), '', time()-1000);
+    endif;
+    session_destroy();
+    //ナビ部分呼び出し
+    require_once 'nav.php';?>
+    <main class="change">
+        <p><img src="img/ja-ne.png" alt="じゃあね" width="300px"></p>
+        <p>退会しました。</p>
+        <p><a href="regist.php">新規登録</a></p>
+    </main>
 <?php endif;
 $pdo = null;?>
 <?php

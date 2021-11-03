@@ -23,12 +23,14 @@
 //ナビ部分呼び出し
     require_once 'nav.php';
 ?>
-<div class="error">
-    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
-    <p>通信に失敗しました</p>
-    <p>ログインしなおしてください</p>
-    <p><a href='login.php'>ログインページ</a></p>
-</div>
+<main>
+    <div class="error">
+        <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+        <p>通信に失敗しました</p>
+        <p>ログインしなおしてください</p>
+        <p><a href='login.php'>ログインページ</a></p>
+    </div>
+</main>
 <?php else: 
     
 //ナビ部分呼び出し
@@ -44,21 +46,30 @@ require_once 'loginnav.php';
     else:
         $pass = $_POST["pass"];
     endif;
+    //SQL実行(SELECT)
+    $stmt=$pdo->prepare("SELECT `id`,`email`,`pass` FROM `regist` WHERE `email`=:email");
+    $stmt->bindParam(':email',$_SESSION["email"]);
+    $stmt->execute();
+    $result=$stmt->fetch(PDO::FETCH_ASSOC);
+    $stmt=null;
+    if($_SESSION["email"] === $result["email"]):
+        if(!password_verify($_POST["pass"],$result["pass"])):
+            $errors["pass"] = "パスワードが違います";
+        endif;
+    endif;
 
 if(count($errors)):?>
-<ul class="error">
-    <li>
-        <img src="img/goukyu.png" alt="泣く" width="300px">
-    </li>
-<?php foreach($errors as $error): ?>
-    <li>
-<?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
-    </li>
-<?php endforeach; ?>
-    <li><a href="mypage.php">マイページに戻る</a></li>
-</ul>
+<main>
+    <ul class="error">
+        <li><img src="img/goukyu.png" alt="泣く" width="300px"></li>
+    <?php foreach($errors as $error): ?>
+        <li><?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?></li>
+    <?php endforeach; ?>
+        <li><a href="mypage.php">マイページに戻る</a></li>
+    </ul>
+</main>
  <?php else:?>
-
+<main>
     <form action="withdrawal2.php" method="post" class="withdrawal-form">
         <input type="hidden" name="email" value="<?php echo $_SESSION["email"]; ?>">
         <input type="hidden" name="pass" value="<?php echo $pass; ?>">
@@ -81,6 +92,7 @@ if(count($errors)):?>
             </tr>
         </table>
     </form>
+ </main>
 <?php endif;?>
 <!-- フッター部分呼び出し -->
 <?php
