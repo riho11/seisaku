@@ -128,6 +128,28 @@ button {
 .line{
     color: white;
 }
+/* 上へ戻るボタン */
+#pagetop{
+    display: none;
+    position: fixed;
+    right: 15px;
+    bottom: 60px;
+}
+#pagetop a{
+    display: block;
+    font-size: 0;
+    width: 50px;
+    height: 50px;
+    text-align: center;
+    background: #7db4e6;
+    border-radius: 50%;
+    line-height: 50px;
+}
+#pagetop a i{
+    font-size: 20px;
+    color:#fff;
+    line-height: 50px;
+}
 }
 
 /* PCサイズ */
@@ -192,7 +214,9 @@ nav #list{
 }
 }
 </style>
+
 <!-- *****↓html記載↓***** -->
+<p id="pagetop"><a href="#"><i class="fas fa-angle-up"></i></a></p>
 <div class="nav">
     <header>
             <h1><a href="index.php"><img class="taiju" src="img/taijulogo.png" alt="ひよこ体重計"></a></h1>
@@ -206,11 +230,12 @@ nav #list{
             <ul id="list">
                 <li class="list"><a class="line" href="regist.php">新規登録</a></li>
                 <li class="list"><a class="line" href="login.php">ログイン</a></li>
-                <li class="list"><a class="line" href="q&a.php">Q&A</a></li>
-                <li class="list"><a class="line" href="firstinquiry.php">お問合せ</a></li>
+                <li class="list"><a class="line" href="firstinquiry.php">お問い合わせ</a></li>
             </ul>
         </div>
     </nav>
+    
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta2/css/all.min.css">
     <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js" integrity="sha256-4+XzXVhsDmqanXGHaHvgh1gMQKX40OUvDEBTu8JcmNs=" crossorigin="anonymous"></script>
 </div>
 <script>
@@ -218,5 +243,22 @@ $(function () {
   $('.js-btn').on('click', function () {        // js-btnクラスをクリックすると、
     $('#list , .btn-line').toggleClass('open'); // メニューとバーガーの線にopenクラスをつけ外しする
   })
+});
+
+// 上へ戻るボタン
+$(function(){
+  var pagetop = $('#pagetop');
+  pagetop.hide();
+  $(window).scroll(function () {
+     if ($(this).scrollTop() > 50) {
+          pagetop.fadeIn();
+     } else {
+          pagetop.fadeOut();
+     }
+  });
+  pagetop.click(function () {
+     $('body, html').animate({ scrollTop: 0 }, 500);
+     return false;
+  });
 });
 </script>
