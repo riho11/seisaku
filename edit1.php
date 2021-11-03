@@ -16,12 +16,27 @@
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
 //DB呼び出し
     require_once 'db.php';
     
-    if(isset($_SESSION["email"])):
+    $errors = array();
+    if(!isset($_SESSION["email"])):
+    
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<main>
+    <div class="error">
+        <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+        <p>通信に失敗しました</p>
+        <p>ログインしなおしてください</p>
+        <p><a href='login.php'>ログインページ</a></p>
+    </div>
+</main>
+<?php else: 
+
+//ナビ部分呼び出し
+require_once 'loginnav.php';
 
 // ↓登録情報↓
         $namae = null;
@@ -43,21 +58,34 @@
 
         $year = null;
         if(!isset($_POST["year"])):
-            $errors["year"] = "生年月日の年を選択してください";
+            $errors["year"] = "生年月日の年を入力してください";
         else:
             $year = $_POST["year"];
         endif;
-
+    
         $month = null;
         if(!isset($_POST["month"])):
             $errors["month"] = "生年月日の月を選択してください";
+        elseif($_POST["year"] > date("Y") || $_POST["year"] < "1900"):
+            $errors["birth"] = "正しい生年月日を選択してください";
+            $month = $_POST["month"];
+        elseif($_POST["year"] === date("Y")):
+            if($_POST["month"] > date("m")):
+                $errors[""] = "正しい生年月日を選択してください";
+            endif;
+            $month = $_POST["month"];
         else:
             $month = $_POST["month"];
         endif;
-
+    
         $day = null;
         if(!isset($_POST["day"])):
             $errors["day"] = "生年月日の日を選択してください";
+        elseif($_POST["month"] === date("m")):
+            if($_POST["day"] > date("d")):
+                $errors[""] = "正しい生年月日を選択してください";
+            endif;
+            $day = $_POST["day"];
         else:
             $day = $_POST["day"];
         endif;
@@ -108,30 +136,49 @@
         else:
             $goal_day = $_POST["goal_day"];
         endif;
-        //SQL実行(UPDATE)
-        $sql = 'UPDATE `regist`INNER JOIN `schedule` ON `regist`.`id` = `schedule`.`regist_id` SET `namae`=:namae ,`sex`=:sex , `year`=:year , `month`=:month , `day`=:day , `height`=:height , `goal_weight`=:goal_weight , `goal_bodyfat`=:goal_bodyfat , `goal_year`=:goal_year , `goal_month`=:goal_month , `goal_day`=:goal_day WHERE `email` = :email';
-        $stmt = $pdo -> prepare($sql);
-        $stmt->bindParam(':namae',$namae);
-        $stmt->bindParam(':sex',$sex);
-        $stmt->bindParam(':year',$year);
-        $stmt->bindParam(':month',$month);
-        $stmt->bindParam(':day',$day);
-        $stmt->bindParam(':height',$height);
-        $stmt->bindParam(':goal_weight',$goal_weight);
-        $stmt->bindParam(':goal_bodyfat',$goal_bodyfat);
-        $stmt->bindParam(':goal_year',$goal_year);
-        $stmt->bindParam(':goal_month',$goal_month);
-        $stmt->bindParam(':goal_day',$goal_day);
-        $stmt->bindParam(':email',$_SESSION['email']);
-        $stmt->execute();
+
+    if(!checkdate($month, $day, $year)):
+        $errors["checkdate"] = "存在しない日付です";
+    endif;
+
+        if(count($errors)):?> 
+            <main>
+                <ul class="error">
+                    <li><img src="img/goukyu.png" alt="泣く" width="300px"></li>
+<?php foreach($errors as $error): ?>
+                    <li><?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?></li>
+<?php endforeach; ?>
+                    <li><a href="mypage.php">マイページへ戻る</a></li>
+                </ul>
+            </main>
+    <?php else:
+            //SQL実行(UPDATE)
+            $sql = 'UPDATE `regist`INNER JOIN `schedule` ON `regist`.`id` = `schedule`.`regist_id` SET `namae`=:namae ,`sex`=:sex , `year`=:year , `month`=:month , `day`=:day , `height`=:height , `goal_weight`=:goal_weight , `goal_bodyfat`=:goal_bodyfat , `goal_year`=:goal_year , `goal_month`=:goal_month , `goal_day`=:goal_day WHERE `email` = :email';
+            $stmt = $pdo -> prepare($sql);
+            $stmt->bindParam(':namae',$namae);
+            $stmt->bindParam(':sex',$sex);
+            $stmt->bindParam(':year',$year);
+            $stmt->bindParam(':month',$month);
+            $stmt->bindParam(':day',$day);
+            $stmt->bindParam(':height',$height);
+            $stmt->bindParam(':goal_weight',$goal_weight);
+            $stmt->bindParam(':goal_bodyfat',$goal_bodyfat);
+            $stmt->bindParam(':goal_year',$goal_year);
+            $stmt->bindParam(':goal_month',$goal_month);
+            $stmt->bindParam(':goal_day',$goal_day);
+            $stmt->bindParam(':email',$_SESSION['email']);
+            $stmt->execute();
 ?>
+    <main class="change">
+        <img src="img/tanosimi-hiyoko.png" alt="踊るひよこ" width="300px">
         <p>変更しました</p>
         <p><a href='mypage.php'>マイページへ</a></p>
-<?php
+    </main>
+<?php  
         $pdo = null;
-        endif; ?>
-<!-- フッター部分呼び出し -->
-<?php
+        endif;
+// フッター部分呼び出し
+    endif; 
     require_once 'footer.php';
 ?>
 </body>

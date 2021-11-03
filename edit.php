@@ -16,12 +16,26 @@
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
 //DB呼び出し
     require_once 'db.php';
+
+    if(!isset($_SESSION["email"])):
     
-    if(isset($_SESSION["email"])):
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<main>
+    <div class="error">
+        <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+        <p>通信に失敗しました</p>
+        <p>ログインしなおしてください</p>
+        <p><a href='login.php'>ログインページ</a></p>
+    </div>
+</main>
+<?php else: 
+
+//ナビ部分呼び出し
+require_once 'loginnav.php';
         //SQL実行(SELECT)
 	    $stmt=$pdo->prepare("SELECT * FROM `regist` INNER JOIN `schedule` ON `regist`.`id` = `schedule`.`regist_id` WHERE `email`=:email");
         $stmt->bindParam(":email",$_SESSION["email"]);
@@ -39,10 +53,6 @@
                         <th><label for="namae">ニックネーム</label></th>
                         <td><input type="text" id="namae" name="namae" value="<?php echo $result["namae"]; ?>" required></td>
                     </tr>
-                    <!-- <tr>
-                        <th><label for="email">メールアドレス</label></th>
-                        <td><input type="email" id="email" name="email" placeholder="sample@sample.jp"></td>
-                    </tr> -->
                     <tr>
                         <th><label for="sex">性別</label></th>
                         <?php if($result["sex"] === 0): ?>
@@ -195,10 +205,9 @@
         </div>
     </main>
 <?php 
-        $pdo = null;
-        endif; ?>
-<!-- フッター部分呼び出し -->
-<?php
+    $pdo = null;
+    endif; 
+// フッター部分呼び出し
     require_once 'footer.php';
 ?>
 </body>

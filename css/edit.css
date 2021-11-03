@@ -135,7 +135,7 @@ table{
     border: none; /* デフォルトの枠線を消す */
   }
   
- .error{
+.error,.change{
     text-align: center;
     padding: 30px;
 }
@@ -173,6 +173,7 @@ table{
     
     main{
         width: 100%;
+        margin: 0 auto;
     }
     
     #namae,#height,#goal_weight,#bodyfat,#goal_bodyfat{
@@ -208,6 +209,7 @@ table{
     
     main{
         width: 100%;
+        margin: 0 auto;
     }
     
     #namae,#height,#goal_weight,#bodyfat,#goal_bodyfat{
