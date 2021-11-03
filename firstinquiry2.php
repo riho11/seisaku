@@ -35,7 +35,7 @@ $mail='pinooniq0301@gmail.com';
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="css/inquiry.css">
+    <link rel="stylesheet" href="css/regist.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜お問い合わせ送信完了</title>
 </head>
@@ -47,9 +47,15 @@ $mail='pinooniq0301@gmail.com';
 ?>
 
 <?php if($result): ?>
+	<main class="change">
+    	<img src="img/tanosimi-hiyoko.png" alt="踊る" width="300px">
 		<p>送信完了</p>
+ 	</main>
 <?php else: ?>
+	<main class="error">
+    	<img src="img/goukyu.png" alt="泣く" width="300px">
 		<p>送信失敗</p>
+ 	</main>
 <?php endif; ?>
 <!-- フッター部分呼び出し -->
 <?php

@@ -27,11 +27,24 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
+    if(!isset($_SESSION["email"])):
     
-    if(isset($_SESSION["email"])):
+//ナビ部分呼び出し
+    require_once 'nav.php';
+?>
+<main>
+    <div class="error">
+        <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+        <p>通信に失敗しました</p>
+        <p>ログインしなおしてください</p>
+        <p><a href='login.php'>ログインページ</a></p>
+    </div>
+</main>
+<?php else: 
+    
     $errors=array();
+//ナビ部分呼び出し
+require_once 'loginnav.php';
 
     $namae = null;
     if(!isset($_POST["namae"]) || !strlen($_POST["namae"])):
@@ -76,17 +89,15 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
 
     if(count($errors)):
     ?> 
+    <main>
 		<ul class="error">
-			<li>
-                <img src="img/goukyu.png" alt="泣く" width="300px">
-			</li>
+			<li><img src="img/goukyu.png" alt="泣く" width="300px"></li>
     <?php foreach($errors as $error): ?>
-                <li>
-    <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
-                </li>
+                <li><?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?></li>
     <?php endforeach; ?>
                 <li><a href="inquiry.php">お問い合わせ画面に戻る</a></li>
             </ul>
+        </main>
     <?php else: ?>
         <main>
             <div id="form">
@@ -127,15 +138,9 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
                 </form>
             </div>
         </main>
-<?php endif; ?>
-
-<?php else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.php'>ログインページ</a></p>
-<?php endif; ?>
-        </main>
-<!-- フッター部分呼び出し -->
-<?php
+<?php endif;
+// フッター部分呼び出し
+    endif; 
     require_once 'footer.php';
     $pdo = null;
 ?>

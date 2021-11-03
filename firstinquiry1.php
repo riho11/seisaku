@@ -21,7 +21,7 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width,initial-scale=1">
-    <link rel="stylesheet" href="css/inquiry.css">
+    <link rel="stylesheet" href="css/regist.css">
     <link rel="shortcut icon" href="img/taiju.png">
     <title>ゆるゆるdiet｜お問い合わせ</title>
 </head>
@@ -76,14 +76,15 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
     if(count($errors)):
     ?>
 
-            <ul>
+        <main>
+            <ul class="error">
+			    <li><img src="img/goukyu.png" alt="泣く" width="300px"></li>
     <?php foreach($errors as $error): ?>
-                <li>
-    <?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?>
-                </li>
+                <li><?php echo htmlspecialchars($error,ENT_QUOTES,"UTF-8") ?></li>
     <?php endforeach; ?>
                 <li><a href="firstinquiry.php">お問い合わせ画面に戻る</a></li>
             </ul>
+        </main>
     <?php else: ?>
         <main>
             <div id="form">

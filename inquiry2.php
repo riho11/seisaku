@@ -44,24 +44,38 @@ $mail='pinooniq0301@gmail.com';
 <body>
     <div id="wrapper">
 <?php
-//ナビ部分呼び出し
-    require_once 'loginnav.php';
+    if(!isset($_SESSION["email"])):
     
-    if(isset($_SESSION["email"])):
+//ナビ部分呼び出し
+    require_once 'nav.php';
 ?>
+<main>
+	<div class="error">
+		<img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+		<p>通信に失敗しました</p>
+		<p>ログインしなおしてください</p>
+		<p><a href='login.php'>ログインページ</a></p>
+	</div>
+</main>
+<?php else: 
+    
+//ナビ部分呼び出し
+require_once 'loginnav.php';
 
-<?php if($result): ?>
+ if($result): ?>
+	<main class="change">
+    	<img src="img/tanosimi-hiyoko.png" alt="踊る" width="300px">
 		<p>送信完了</p>
+ 	</main>
 <?php else: ?>
+	<main class="error">
+    	<img src="img/goukyu.png" alt="泣く" width="300px">
 		<p>送信失敗</p>
+ 	</main>
 <?php endif; ?>
-        
-<?php else: ?>
-	<p>ログインしなおしてください</p>
-	<p><a href='login.php'>ログインページ</a></p>
-<?php endif; ?>
-<!-- フッター部分呼び出し -->
 <?php
+// フッター部分呼び出し
+	endif;
     require_once 'footer.php';
     $pdo = null;
 ?>
