@@ -98,34 +98,38 @@ th{
     background: #fff;
     transition: .4s;
   }
-  
 .btn-border:hover {
     color: #fff;
     background: #000;
   }
-
+table .tr-center td{
+    text-align: center;
+}
+/* タイトル（体重記録） */
 main h1{
     text-align: center;
     font-size: 2em;
     font-weight: bolder;
     margin: 1em 0 0.67em;
 }
-
 .under {
     background: linear-gradient(transparent 70%, #fcd0d8 70%);
 }
 
-table .tr-center td{
-    text-align: center;
+.form-table th {
+    padding: 10px 0 ;
+    text-align: right;
+    width: 130px;
 }
-
 table{
     border-collapse: collapse;
     margin: 20px auto 50px;
 }
-    
-.form-table {
-    width: 100%;
+.form-table{
+    width: 350px;
+}
+.form-table td {
+    padding: 20px;
 }
 /* テキストの枠線 */
 #record_weight,#record_bodyfat{
@@ -135,29 +139,40 @@ table{
     border: none;
     box-shadow: 0 0 0 1px #ccc;
 }
-
 /* テキストを選択した時の色 */
 #record_weight:focus,#record_bodyfat:focus{
     outline: 0;
     box-shadow: 0 0 0 2px rgb(33, 150, 243) ;
 }
-  /* サンプル文字の色 */
+/* サンプル文字の色 */
 ::placeholder{
     color: rgb(192, 190, 190);
 }
-
 .error{
     text-align: center;
 }
+/* １週間・１カ月ボタン */
 .chart-button {
     padding: .5em 1em;
     background: white;
     border-radius: 10px 50px/50px 10px;
     border: dashed 2px #333;
-    margin-bottom: 20px;
+    margin:30px auto;
   }
 .chart-button:hover{
     background: skyblue;
+}
+.goal{
+    margin-bottom: 30px;
+}
+
+
+/* スマホ・タブレットサイズ */
+@media screen and (min-width:0px) and (max-width:1024px){
+    .chart{
+        margin: auto;
+        padding: 10px;
+    }
 }
 
 /* PCサイズ */
@@ -166,27 +181,6 @@ table{
         flex-wrap:wrap;
         max-width:2000px;
         margin:0 auto;
-    }
-    
-    main{
-        margin: 0 auto;
-    }
-    .form-table{
-        width: 350px;
-    }
-    
-    .form-table td {
-        padding: 20px;
-    }
-    
-    .form-table th {
-        padding: 10px 0 ;
-        text-align: right;
-        width: 130px;
-    }
-
-    .form-table .bodyfat{
-        text-align: right;
     }
     .chart{
         width: 800px;

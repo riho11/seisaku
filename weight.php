@@ -24,12 +24,14 @@
 //ナビ部分呼び出し
     require_once 'nav.php';
 ?>
-<div class="error">
-    <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
-    <p>通信に失敗しました</p>
-    <p>ログインしなおしてください</p>
-    <p><a href='login.php'>ログインページ</a></p>
-</div>
+<main>
+  <div class="error">
+      <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
+      <p>通信に失敗しました</p>
+      <p>ログインしなおしてください</p>
+      <p><a href='login.php'>ログインページ</a></p>
+  </div>
+</main>
 <?php else: 
     
 //ナビ部分呼び出し
@@ -136,7 +138,7 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
                 $stmt->execute();
                 $stmt = null;
             else: ?>
-                <p>既に本日の体重は入力しました</p> 
+                <p>既に本日の体重は登録しました</p> 
                 <p>また明日入力お願いします</p> 
                 <style>.goal{ display: none; }</style><!-- 登録完了を非表示 -->
     <?php   endif;
@@ -179,7 +181,7 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
 
 
 <!-- 押したら表示されるボタン-->
-<form action="weight.php" method="POST">
+<form class="chart-form" action="weight.php" method="POST">
     <button class="chart-button" name="week" value="一週間">一週間</button>
     <button class="chart-button" name="month" value="一カ月">一カ月</button>
 </form>
