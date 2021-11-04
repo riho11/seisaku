@@ -32,7 +32,6 @@
     </div>
 </main>
 <?php else: 
-
 //ナビ部分呼び出し
 require_once 'loginnav.php';?>
 <main>
@@ -134,6 +133,32 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
         <input type="submit" class="btn-border" name="submit" value="送信">
         </form>
 <?php
+$mistake = array();
+// 自分のコメントか確認し削除
+try{
+    if(isset($_GET["delete"])):
+        $stmt=$pdo->prepare("SELECT `id`,`regist_id` FROM `comment` WHERE `id`=:id");
+        $stmt->bindParam(':id',$_GET["delete"]);
+        $stmt->execute();
+        $str=$stmt->fetch(PDO::FETCH_ASSOC);
+        $stmt=null;
+        if($str["regist_id"] === $result["id"]):
+            //SQL実行(DELEET)
+            $stmt=$pdo->prepare("DELETE FROM `comment` WHERE `id`=:id");
+            $stmt->bindParam(':id',$_GET["delete"]);
+            $stmt->execute();
+            $stmt=null;
+        else:
+            $alert = "<script>alert('ほかの人のコメントは消せません')</script>";
+            echo $alert;
+        endif;
+    endif;
+} catch (Exception $e) {
+    $alert = "<script>alert('投稿番号が間違っています')</script>";
+    echo $alert;
+}
+?>
+<?php
 // 書き込み内容呼び出し
     $stmt=$pdo->prepare("SELECT * FROM `comment` INNER JOIN `img` ON `comment`.`regist_id` = `img`.`regist_id` ORDER BY `date` DESC LIMIT 10");
     $stmt->execute();
@@ -158,34 +183,7 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
     <input type="number" name="delete" min="1" required>
     <input type="submit" name="submit" value="削除">
 </form>
-<?php
-$mistake = array();
-// 自分のコメントか確認し削除
-try{
-    if(isset($_GET["delete"])):
-        $stmt=$pdo->prepare("SELECT `id`,`regist_id` FROM `comment` WHERE `id`=:id");
-        $stmt->bindParam(':id',$_GET["delete"]);
-        $stmt->execute();
-        $str=$stmt->fetch(PDO::FETCH_ASSOC);
-        $stmt=null;
-        if($str["regist_id"] === $result["id"]):
-            //SQL実行(DELEET)
-            $stmt=$pdo->prepare("DELETE FROM `comment` WHERE `id`=:id");
-            $stmt->bindParam(':id',$_GET["delete"]);
-            $stmt->execute();
-            $stmt=null;
-            // $alert = "<script>alert('削除できました');window.location.reload();</script>";
-            // echo $alert;
-        else:
-            $alert = "<script>alert('ほかの人のコメントは消せません')</script>";
-            echo $alert;
-        endif;
-    endif;
-} catch (Exception $e) {
-    $alert = "<script>alert('投稿番号が間違っています')</script>";
-    echo $alert;
-}
-?>
+
     </div>
 </main>
 <?php
