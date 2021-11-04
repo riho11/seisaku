@@ -10,14 +10,12 @@ header{
     border-radius:50%;
     width:  60px;
     height: 60px;
-	margin-right: 40px;
 }
 .firsticon{
 	margin-top: auto;
 }
 .error-name{
-  margin-top: auto;
-  margin-bottom: 20px;
+  margin:auto 40px 0 15px;
 }
 .header{
 	display: flex;
@@ -74,6 +72,9 @@ button {
 	font: inherit;
 	-webkit-appearance: none;
 	appearance: none;
+}
+.error-name{
+  margin-bottom:0;
 }
 .btn {
 	/* ボタンの配置位置  */
@@ -278,8 +279,8 @@ nav #list{
     <header>
 		<div class="header">
 			<h1><a href="mypage.php"><img class="taiju" src="img/taijulogo.png" alt="ひよこ体重計"></a></h1>
-			<p class="error-name"><?php echo $_SESSION['namae']; ?>さん、頑張りましょう</p>
 			<a href="img.php" class="firsticon"><img class="icon" src="<?php echo $_SESSION["img"]; ?>" alt="アイコン画像"></a>
+			<p class="error-name"><?php echo $_SESSION['namae']; ?>さん、<br>頑張りましょう</p>
 		</div>
 	</header>
     <!-- ナビ部分 -->
@@ -300,8 +301,8 @@ nav #list{
                         </ul>
                     </div>
                 </li>
-                <li class="list"><a class="line" href="communication.php">みんなで交流</a></li>
-                <li class="list"><a class="line" href="inquiry.php">お問い合わせ</a></li>
+                <li class="list"><a class="line" href="communication.php">掲示板</a></li>
+                <li class="list"><a class="line" href="inquiry.php">お問い合わせ<i class="fas fa-envelope fa-xs"></i></a></li>
                 <li class="list"><a class="line" href="logout.php">ログアウト</a></li>
             </ul>
         </div>

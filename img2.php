@@ -23,6 +23,7 @@
     require_once 'nav.php';
 ?>
 <main>
+    
     <img src="img/shinyazangyou-hiyoko.png" alt="error" width="300px">
     <p>通信に失敗しました</p>
     <p>ログインしなおしてください</p>
