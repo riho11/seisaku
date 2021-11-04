@@ -145,8 +145,8 @@ button {
 }
 .line{
     display:block;
-    width:100%;
-	padding:60px;
+	height: 23vh;
+    padding-top:9vh;
 	text-align:center;
     color: white;
 }
