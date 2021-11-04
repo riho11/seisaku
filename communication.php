@@ -99,17 +99,21 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
         endif;
 //エラーがなければ保存
         if(count($errors) === 0):
-            $date = date('Y-m-d H:i:s');
-            $sql='INSERT INTO `comment`(`regist_id`,`date`,`comment`,`namae`) VALUES(:regist_id,:date,:comment,:namae)';
-            $stmt = $pdo -> prepare($sql);
-            $stmt->bindParam(':regist_id',$result["id"]);
-            $stmt->bindParam(':date',$date);
-            $stmt->bindParam(':comment',$comment);
-            $stmt->bindParam(':namae',$namae);
-            $stmt->execute();
-            $stmt = null;
+// トークンが同じなら保存
+            if($_REQUEST["token"] == $_SESSION["token"]):
+                $date = date('Y-m-d H:i:s');
+                $sql='INSERT INTO `comment`(`regist_id`,`date`,`comment`,`namae`) VALUES(:regist_id,:date,:comment,:namae)';
+                $stmt = $pdo -> prepare($sql);
+                $stmt->bindParam(':regist_id',$result["id"]);
+                $stmt->bindParam(':date',$date);
+                $stmt->bindParam(':comment',$comment);
+                $stmt->bindParam(':namae',$namae);
+                $stmt->execute();
+                $stmt = null;
+            endif;
         endif;
     endif;
+    $_SESSION["token"] = $token = mt_rand();
 ?>
 <body>
     <h1>みんなで応援しあおう！</h1>
@@ -128,6 +132,8 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
                 <?php endforeach; ?>
             </ul>
             <?php endif; ?>
+            
+        <input name="token" type="hidden" value="<?php echo $token; ?>">
         名前:<input type="text" id="namae" name="namae" value="<?php echo $result["namae"]; ?>" required><br>
         ひとこと:<textarea id="comment" name="comment" rows="2"  cols="40"></textarea><br>
         <input type="submit" class="btn-border" name="submit" value="送信">
