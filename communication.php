@@ -10,7 +10,7 @@
     <meta name="viewport" content="width=device-width,initial-scale=1">
     <link rel="stylesheet" href="css/communication.css">
     <link rel="shortcut icon" href="img/taiju.png">
-    <title>ゆるゆるdiet｜みんなで交流</title>
+    <title>ゆるゆるdiet｜掲示板</title>
 </head>
 <body>
     <div id="wrapper">
