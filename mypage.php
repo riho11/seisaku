@@ -224,15 +224,24 @@ require_once 'loginnav.php';?>
                 </tr>
             </table>
             
-            <p class="basics">あなたの基礎代謝量は　
+            <p class="basics">あなたの現在の基礎代謝量は<br>
                 <span><?php
                 // 基礎代謝(国立健康・栄養研究所の式)
-                        $age = current_age($result["month"],$result["day"],$result["year"]);
-                            if($result["sex"] == 0):
-                                echo basicsman($result["weight"],$result["height"],$age) . "kcal/日";
-                            elseif($result["sex"] == 1):
-                                echo basicswoman($result["weight"],$result["height"],$age) . "kcal/日";
-                            endif;?></span>
+                    $age = current_age($result["month"],$result["day"],$result["year"]);
+                    try { // 現在の体重が設定されていない場合、例外処理で初期の体重を記載
+                        if($result["sex"] == 0):
+                            echo basicsman($record["record_weight"],$result["height"],$age) . "kcal/日";
+                        elseif($result["sex"] == 1):
+                            echo basicswoman($record["record_weight"],$result["height"],$age) . "kcal/日";
+                        endif;
+                    } catch(Exception $e) {
+                        if($result["sex"] == 0):
+                            echo basicsman($result["weight"],$result["height"],$age) . "kcal/日";
+                        elseif($result["sex"] == 1):
+                            echo basicswoman($result["weight"],$result["height"],$age) . "kcal/日";
+                        endif;
+                    }
+            ?></span>
             です。</p>
 <?php
     endif;
