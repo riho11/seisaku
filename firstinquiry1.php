@@ -118,8 +118,8 @@ if(!(hash_equals($_POST['token'],$_SESSION['token']))){
                         </tr>
                         <tr class="tr-center">
 			                <input type="hidden" name="token" value=<?php echo $_POST['token']; ?>>
-                            <td><input class="btn btn-border" type="submit" value="登録"></td>
-                            <td><input class="btn btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
+                            <td><input class="btn-border" type="submit" value="登録"></td>
+                            <td><input class="btn-border" type="button" value="戻る" onclick="history.go(-1)"></td>
                         </tr>
                     </table>
                 </form>
