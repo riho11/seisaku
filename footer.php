@@ -53,7 +53,7 @@ a{
 <footer>
     <div id="footer">
         <ul class="p_footer">
-            <li><a class="a_footer" href="site.html">サイトについて</a></li>
+            <li><a class="a_footer" href="site.php">サイトについて</a></li>
         </ul>
         <div class="img_footer">
             <a href=""><img src="img/facebook.png" alt="フェイスブック" width="50px"></a>
