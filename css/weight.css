@@ -106,9 +106,9 @@ table .tr-center td{
     text-align: center;
 }
 /* タイトル（体重記録） */
-main h1{
+main .record-form{
     text-align: center;
-    font-size: 2em;
+    font-size: 200%;
     font-weight: bolder;
     margin: 1em 0 0.67em;
 }
@@ -152,6 +152,11 @@ table{
     text-align: center;
 }
 /* １週間・１カ月ボタン */
+.chart-h1{
+    font-size: 180%;
+    font-weight: bolder;
+    margin-top: 40px;
+}
 .chart-button {
     padding: .5em 1em;
     background: white;

@@ -72,7 +72,7 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
     }?>
         <div id="form">
 <!-- 記録フォーム -->
-            <h1><span class="under">体重記録</span></h1>
+            <h1 class="record-form"><span class="under">体重記録</span></h1>
             <form action="weight.php" method="POST">
                 <table class="form-table">
                     <tr>
@@ -181,6 +181,7 @@ try { // 目標設定がされていない場合、例外処理で目標設定�
 
 
 <!-- 押したら表示されるボタン-->
+<h1 class="chart-h1"><span class="under">グラフ表示</span></h1>
 <form class="chart-form" action="weight.php" method="POST">
     <button class="chart-button" name="week" value="一週間">一週間</button>
     <button class="chart-button" name="month" value="一カ月">一カ月</button>
@@ -212,15 +213,18 @@ $str_last = explode("-",$week_last);
 if(date("d") > $str_past[2]):
 // 今日の日付より１週間前の日付が小さい場合(月をまたがない場合)
   for($i = $str_past[2]; $i <= date("d"); $i++){
-    echo "'" .$i ."'". ',';
+    $sprintf = sprintf("%02d",$i);
+    echo "'" .$sprintf ."'". ',';
   }
 else:
 // 今日の日付より１週間前の日付が大きい場合(月をまたぐ場合)
   for($i = $str_past[2]; $i <= $str_last[2]; $i++){
-    echo "'" .$i ."'". ',';
+    $sprintf = sprintf("%02d",$i);
+    echo "'" .$sprintf ."'". ',';
   }
   for($i = 1; $i <= date("d"); $i++){
-    echo "'" .$i ."'". ',';
+    $sprintf = sprintf("%02d",$i);
+    echo "'" .$sprintf ."'". ',';
   }
 endif;
 ?>],
@@ -249,7 +253,8 @@ $Ym = date("Y-m-");
 $Ym_lastmonth = date("Y-") . $str_last[1] ."-";
   if(date("d") > $str_past[2]):
     for($i = $str_past[2]; $i <= date("d"); $i++){
-      array_push($every_date,$Ym .$i);
+      $sprintf = sprintf("%02d",$i);
+      array_push($every_date,$Ym .$sprintf);
     }
   else:
     for($i = $str_past[2]; $i <= $str_last[2]; $i++){
