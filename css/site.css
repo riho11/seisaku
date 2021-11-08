@@ -1,0 +1,154 @@
+@charset "UTF-8";
+/* リセットCSS */
+/* http://meyerweb.com/eric/tools/css/reset/ 
+   v2.0 | 20110126
+   License: none (public domain)
+*/
+
+html, body, div, span, applet, object, iframe,
+h1, h2, h3, h4, h5, h6, p, blockquote, pre,
+a, abbr, acronym, address, big, cite, code,
+del, dfn, em, img, ins, kbd, q, s, samp,
+small, strike, strong, sub, sup, tt, var,
+b, u, i, center,
+dl, dt, dd, ol, ul, li,
+fieldset, form, label, legend,
+table, caption, tbody, tfoot, thead, tr, th, td,
+article, aside, canvas, details, embed, 
+figure, figcaption, footer, header, hgroup, 
+menu, nav, output, ruby, section, summary,
+time, mark, audio, video {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+	vertical-align: baseline;
+}
+/* HTML5 display-role reset for older browsers */
+article, aside, details, figcaption, figure, 
+footer, header, hgroup, menu, nav, section {
+	display: block;
+}
+body {
+	line-height: 1;
+}
+ol, ul {
+	list-style: none;
+}
+blockquote, q {
+	quotes: none;
+}
+blockquote:before, blockquote:after,
+q:before, q:after {
+	content: '';
+	content: none;
+}
+table {
+	border-collapse: collapse;
+	border-spacing: 0;
+}
+
+
+@font-face {
+    font-family: 'APJapanesefont'; 
+    src: url('font/apjapanesefont.woff') format('woff'),
+         url('font/apjapanesefont.woff2') format('woff2'),
+         url('font/APJapanesefont.ttf') format('truetype');
+}
+
+html,body,a,h1{
+    margin: 0;
+    padding: 0;
+}
+
+html{
+    font-family: 'APJapanesefont'; 
+    font-size:140%;
+}
+
+#wrapper{
+    width: 100%;
+    margin: 0 auto;
+}
+main{
+    width: 80%;
+    text-align: center;
+    margin: 0 auto;
+}
+h1{
+    font-size: 150%;
+    font-weight: bold;
+    text-align: left;
+}
+p{
+    font-size: 110%;
+    line-height: 30px;
+}
+
+.title h1{
+    margin: 50px 0;
+    border-bottom: dashed 2px #6594e0;
+}
+.concept h1,.chart h1,.comment h1,.mypage h1,.responsive h1{
+    margin-bottom: 30px;
+}
+.concept,.chart,.comment,.mypage,.responsive{
+    width: 80%;
+    margin: 50px auto;
+    padding: 20px;
+    border: solid 3px #5776d3;
+    border-radius: 20px;
+    text-align: left;
+}
+
+.ABOUT{
+    text-align: left;
+    margin: 30px auto;
+    width: 80%;
+}
+.ABOUT h1{
+    font-size: 120%;
+}
+.ABOUT .title{
+    color: #2971e6;
+}
+
+.ABOUT .about{
+    font-size: 140%;
+    margin: 50px 0 20px;
+    border-bottom: dashed 2px #6594e0;
+}
+.inside{
+    margin: 10px 20px;
+}
+
+
+/* スマホ・タブレットサイズ */
+@media screen and (max-width:1024px){
+    main{
+        width: 80%;
+        padding:50px 0;
+    }
+    main img{
+        width: 100%;
+    }
+}
+/* PCサイズ */
+@media screen and (min-width:1025px){
+#wrapper{
+    flex-wrap:wrap;
+    max-width:2000px;
+    margin:0 auto;
+}
+.chart,.comment,.mypage2,.responsive{
+    display: table;
+}
+.box{
+  display: table-cell;
+}
+.chart p,.comment p,.mypage2 p,.responsive p{
+    vertical-align: middle;
+}
+
+}
