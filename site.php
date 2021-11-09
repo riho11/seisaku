@@ -1,3 +1,7 @@
+<?php
+    session_start();
+	session_regenerate_id(true);
+?>
 <!-- サイトについて -->
 <!DOCTYPE html>
 <html lang="ja">
@@ -19,9 +23,9 @@ if(!isset($_SESSION["email"])):
     require_once 'site.html';
 else:     
 //ナビ部分呼び出し
-require_once 'loginnav.php';
+    require_once 'loginnav.php';
 // サイトの中身呼び出し
-require_once 'site.html';
+    require_once 'site.html';
 
 // フッター部分呼び出し
 endif;
