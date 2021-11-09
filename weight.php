@@ -356,12 +356,14 @@ $month_last = date("Y-n-d",strtotime("last day of previous month")); //先月の
 $str_past = explode("-",$month_past);
 $str_last = explode("-",$month_last);
 $now_month = date("n");
-// 今日の日付より１カ月前の日付が大きい場合(月をまたぐ場合)
+// 今日の日付より１カ月前の日付が大きい場合
   for($i = $str_past[2]; $i <= $str_last[2]; $i++){
-    echo "'" .$str_last[1].".".$i ."'". ',';
+    $sprintf = sprintf("%02d",$i);
+    echo "'" .$str_last[1].".".$sprintf ."'". ',';
   }
   for($i = 1; $i <= date("d"); $i++){
-    echo "'" .$now_month.".".$i ."'". ',';
+    $sprintf = sprintf("%02d",$i);
+    echo "'" .$now_month.".".$sprintf ."'". ',';
   }?>],
       datasets: [
         {
@@ -386,7 +388,7 @@ $str_past = explode("-",$month_past);
 $str_last = explode("-",$month_last);
 $Ym = date("Y-m-");
 $Ym_lastmonth = date("Y-") . $str_last[1] ."-";
-// 今日の日付より１カ月前の日付が大きい場合(月をまたぐ場合)
+// 今日の日付より１カ月前の日付が大きい場合
   for($i = $str_past[2]; $i <= $str_last[2]; $i++){
     $sprintf = sprintf("%02d",$i);
     array_push($every_month,$Ym_lastmonth.$sprintf);
