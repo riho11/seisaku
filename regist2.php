@@ -84,7 +84,7 @@
     $day = null;
     if(!isset($_POST["day"])):
         $errors["day"] = "生年月日の日を選択してください";
-    elseif($_POST["month"] === date("m")):
+    elseif($_POST["year"] === date("Y") && $_POST["month"] === date("m")):
         if($_POST["day"] > date("d")):
             $errors[""] = "正しい生年月日を選択してください";
         endif;
